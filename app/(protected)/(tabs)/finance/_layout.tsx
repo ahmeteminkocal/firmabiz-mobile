@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 
-export function FinanceLayout() {
+export default function FinanceLayout() {
     return (
       <>
         <Stack
@@ -9,5 +9,3 @@ export function FinanceLayout() {
       </>
     )
 }
-
-export default FinanceLayout

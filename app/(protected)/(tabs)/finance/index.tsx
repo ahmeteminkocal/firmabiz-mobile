@@ -34,7 +34,7 @@ const data: ItemType[] = [
 
 ];
 
-export function Finance() {
+export default function FinanceScreen() {
     // const tabBarHeight = useBottomTabBarHeight();
     
     return (
@@ -47,7 +47,7 @@ export function Finance() {
                     key={item.id}
                     onPress={() => 
                         // failure(tabBarHeight)
-                        router.push('/(protected)/(home)/(finance)/details')
+                        router.push('/finance/details')
                     }
                     className={`flex-1 ${item.backgroundColor} rounded-xl items-center justify-center gap-3`}
                 >
@@ -60,5 +60,3 @@ export function Finance() {
       </View>
     )
 }
-
-export default Finance

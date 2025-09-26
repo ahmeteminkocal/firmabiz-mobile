@@ -63,7 +63,7 @@ export function VerifyEmailForm() {
           <Button className="w-full" onPress={
             handleSubmit(data => {
               router.dismissAll()
-              router.push('/(protected)/(home)')
+              router.push('/(protected)/(tabs)/home')
             })}>
             <Text>Continue</Text>
           </Button>

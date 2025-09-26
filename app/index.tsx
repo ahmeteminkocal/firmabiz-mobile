@@ -1,13 +1,12 @@
 import { Button } from '@/components/atoms/button'
 import Dialog from '@/components/atoms/dialog'
 import { Text } from '@/components/atoms/text'
-import { AccordionView } from '@/components/ui/AccordionView'
 import ReusableDialog from '@/components/ui/ReusableDialog'
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
-export default function Index() {
+export default function SplashScreen() {
 
     const router = useRouter();
 
@@ -23,13 +22,13 @@ export default function Index() {
           }}
           > 
           <Text className='text-foreground'>
-            Dialog
+            Dialog Test
           </Text>
         </Button>
         <Button
           variant={'link'}
           onPress={() => {
-            router.replace('/(protected)/(home)/(finance)/details')
+            router.replace('/(protected)/(tabs)/finance/details')
           }}
           > 
           <Text className='text-foreground'>
@@ -38,28 +37,20 @@ export default function Index() {
         </Button>
 
         <Dialog 
+          visible={dialogVisible} 
+          setVisible={setDialogVisible}        
           builder={(
             <ReusableDialog
               visible={dialogVisible} 
               setVisible={setDialogVisible}
               title='Add Note'
-              content={(<AccordionView/>)}
+              content={(<Text>Dialog Content</Text>)}
               actions={[
-                {
-                  title: 'Cancel',
-                  action: () => {},
-                  variant: 'outline'
-                },
-                {
-                  title: 'Update',
-                  action: () => {},
-                  variant: 'default'
-                }
+                { title: 'Cancel', action: () => {}, variant: 'outline' },
+                { title: 'Update', action: () => {}, variant: 'default' }
               ]}
             />
           )} 
-          visible={dialogVisible} 
-          setVisible={setDialogVisible}        
         />
       </View>
     )

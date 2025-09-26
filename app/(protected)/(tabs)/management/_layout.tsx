@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 
-export default function ProtectedLayout() {
+export default function ManagementLayout() {
     return (
       <>
         <Stack

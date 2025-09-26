@@ -5,7 +5,7 @@ import { HomeTab } from '@/lib/types';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 
-export default function Home() {
+export default function HomeScreen() {
 
   const [activeTab, setActiveTab] = useState<HomeTab>(HomeTab.Summary);
 

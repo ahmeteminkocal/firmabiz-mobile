@@ -24,6 +24,8 @@ export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
           const isFocused = state.index === index;
 
           const tabNavigate = () => {
+            setBottomSheetVisible(false);
+            setTabPressed(false);
             const event = navigation.emit({
               type: "tabPress",
               target: route.key,
@@ -56,6 +58,7 @@ export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
               </Pressable>
             )
           }
+
 
           return  (
             <Pressable

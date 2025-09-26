@@ -1,4 +1,5 @@
-import { Text, View } from 'react-native';
+import { Text } from '@/components/atoms/text';
+import { View } from 'react-native';
 
  function Profile() {
     return (

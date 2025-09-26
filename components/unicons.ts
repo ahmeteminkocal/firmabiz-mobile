@@ -1,10 +1,10 @@
-import { AngleDown, AngleLeft, AngleRight, AngleUp, ArrowGrowth, BitcoinSign, CalculatorAlt, ChartBar, Check , FileDownload, Filter, HomeAlt, ListUl, MoneyBill, MoneyStack, MoneyWithdraw, User } from 'react-native-unicons';
+import { AngleDown, AngleLeft, AngleRight, AngleUp, ArrowGrowth, BitcoinSign, CalculatorAlt, ChartPieAlt, Check, FileDownload, Filter, HomeAlt, Layers, ListUl, MoneyBill, MoneyStack, MoneyWithdraw, User } from 'react-native-unicons';
 
 export const unicons = {
   check: Check,
   home: HomeAlt,
   profile: User,
-  chart: ChartBar,
+  chart: ChartPieAlt,
   menu: ListUl,
   fileDownload: FileDownload,
   filter: Filter,
@@ -17,7 +17,8 @@ export const unicons = {
   finance: MoneyBill,
   moneyStack: MoneyStack,
   bitcoinSign: BitcoinSign,
-  moneyWithdraw: MoneyWithdraw
+  moneyWithdraw: MoneyWithdraw,
+  logs: Layers,
 } as const;
 
 

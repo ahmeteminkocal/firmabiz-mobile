@@ -3,23 +3,28 @@ import { TabsProps } from "./types";
 
 export const MAIN_TABS: TabsProps[] = [
   {
-    name: "index",
+    name: "home",
     label: "Home",
     icon: {name: 'home'}
   },
   {
-    name: "(finance)",
+    name: "finance",
     label: "Finance",
     icon: {name: 'finance'}
   },
   {
-    name: "charts",
-    label: "Charts",
+    name: "management",
+    label: "Management",
     icon: {name: 'chart'}
   },
   {
-    name: "profile",
-    label: "Profile",
+    name: "platform",
+    label: "Platform",
     icon: {name: 'profile'}
   },
+  {
+    name: "logs",
+    label: "Logs",
+    icon: {name: 'logs'}
+  }
 ];
