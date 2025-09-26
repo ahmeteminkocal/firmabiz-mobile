@@ -129,7 +129,6 @@ export function AccordionView() {
             isActive={isActive}/>
         )}
         onChange={(indexes) => {
-          console.log('----------------', indexes);
           setActiveSections(indexes);
         }}
         underlayColor='transperant'

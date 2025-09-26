@@ -2,7 +2,7 @@ import { Text } from '@/components/atoms/text';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/TertiaryAccordion';
 import { View } from 'react-native';
 
-export function Details() {
+export default function Details() {
     return (
       <View className='flex-1 bg-background gap-2 px-2 pt-2 mt-safe'>
         <Accordion type='single' collapsible>
@@ -27,5 +27,3 @@ export function Details() {
       </View>
     )
 }
-
-export default Details

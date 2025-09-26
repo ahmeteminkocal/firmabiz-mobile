@@ -2,7 +2,6 @@ import { Icon } from '@/components/atoms/icon';
 import { Text } from '@/components/atoms/text';
 import GridView from '@/components/ui/GridView';
 import { UniconName } from '@/components/unicons';
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 
@@ -36,7 +35,7 @@ const data: ItemType[] = [
 ];
 
 export function Finance() {
-    const tabBarHeight = useBottomTabBarHeight();
+    // const tabBarHeight = useBottomTabBarHeight();
     
     return (
       <View className='flex-1 bg-background px-2 pt-4'>

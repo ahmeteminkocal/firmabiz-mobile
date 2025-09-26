@@ -1,6 +1,6 @@
-import { OtpInput } from "react-native-otp-entry";
-import { StyleSheet } from "react-native";
 import { THEME } from "@/lib/theme";
+import { StyleSheet } from "react-native";
+import { OtpInput } from "react-native-otp-entry";
 
 export function OtpField({
     digits = 6,
@@ -20,7 +20,7 @@ export function OtpField({
         secureTextEntry={false}
         focusStickBlinkingDuration={500}
         onTextChange={onChange}
-        onFilled={(text) => console.log(`OTP is filled`)}
+        onFilled={(text) => {}}
         textInputProps={{
             accessibilityLabel: "One-Time Password",
             value: value

@@ -1,6 +1,6 @@
-import { get, put } from '@/lib/services/apiClient';
-import { create } from 'zustand';
+import { put } from '@/lib/services/apiClient';
 import { setAuthToken } from '@/lib/services/storageClient';
+import { create } from 'zustand';
 
 interface AuthState {
     loading: boolean;
@@ -44,4 +44,4 @@ interface LoginResponse {
     token: string;
 }
 
-export { User, LoginPayload, LoginResponse }
+export { LoginPayload, LoginResponse, User };

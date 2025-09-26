@@ -1,11 +1,11 @@
-import HomeTabsHeader from '@/components/home/HomeTabsHeader';
-import React, { useState } from 'react'
-import { View } from 'react-native'
 import HomeSummaryTab from '@/components/home/HomeSummaryTab';
 import HomeTableTab from '@/components/home/HomeTableTab';
+import HomeTabsHeader from '@/components/home/HomeTabsHeader';
 import { HomeTab } from '@/lib/types';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 
-function Home() {
+export default function Home() {
 
   const [activeTab, setActiveTab] = useState<HomeTab>(HomeTab.Summary);
 
@@ -20,5 +20,3 @@ function Home() {
     </View>
   )
 }
-
-export default Home;
