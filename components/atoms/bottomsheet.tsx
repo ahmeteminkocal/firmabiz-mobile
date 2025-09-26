@@ -1,9 +1,10 @@
+import { BOTTOM_TAB_BAR_HEGHT } from '@/lib/constants';
 import {
-  StyleSheet,
   Pressable,
+  StyleSheet,
   View,
 } from 'react-native';
-import Animated, { FadeInDown, LinearTransition, SlideInDown, SlideOutDown } from 'react-native-reanimated';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 interface BottomSheetParams {
   builder: React.ReactElement,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   },
   sheetContainer: {
     position: 'absolute',
-    bottom: 94, // stop above the tab bar
+    bottom: BOTTOM_TAB_BAR_HEGHT, // stop above the tab bar
     width: '100%',
   },
 });

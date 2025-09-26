@@ -1,6 +1,8 @@
+import { Text } from '@/components/atoms/text';
+import { BOTTOM_TAB_BAR_HEGHT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View } from "react-native";
 import Toast from "react-native-toast-message";
 
 interface CustomToastProps {
@@ -32,13 +34,13 @@ export const success = () => {
     });
 };
 
-export const failure = (tabBarHeight: number) => {
+export const failure = () => {
 
     Toast.show({
         type: "custom",
         text1: "Transaction id not found",
         position: "bottom",
         props: {color: "#C25100"},
-        bottomOffset: tabBarHeight + 24
+        bottomOffset: BOTTOM_TAB_BAR_HEGHT + 24
     });
 };

@@ -3,7 +3,7 @@ import BottomSheet from '@/components/atoms/bottomsheet';
 import { Icon } from '@/components/atoms/icon';
 import { Text } from '@/components/atoms/text';
 import { AccordionView } from '@/components/ui/AccordionView';
-import { MAIN_TABS } from '@/lib/constants';
+import { BOTTOM_TAB_BAR_HEGHT, MAIN_TABS } from '@/lib/constants';
 import { THEME } from '@/lib/theme';
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { useState } from 'react';
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: THEME.background,
     paddingTop: 24,
+    height: BOTTOM_TAB_BAR_HEGHT,
     
     shadowColor: THEME.foreground, 
     shadowOffset: { width: 0, height: -3 }, 

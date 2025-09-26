@@ -1,5 +1,6 @@
 import { TabsProps } from "./types";
 
+export const BOTTOM_TAB_BAR_HEGHT = 94;
 
 export const MAIN_TABS: TabsProps[] = [
   {

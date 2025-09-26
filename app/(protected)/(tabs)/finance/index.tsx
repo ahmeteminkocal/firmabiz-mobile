@@ -34,9 +34,7 @@ const data: ItemType[] = [
 
 ];
 
-export default function FinanceScreen() {
-    // const tabBarHeight = useBottomTabBarHeight();
-    
+export default function FinanceScreen() {    
     return (
       <View className='flex-1 bg-background px-2 pt-4'>
         <GridView<ItemType> 
@@ -46,7 +44,7 @@ export default function FinanceScreen() {
                 <Pressable
                     key={item.id}
                     onPress={() => 
-                        // failure(tabBarHeight)
+                        // failure()
                         router.push('/finance/details')
                     }
                     className={`flex-1 ${item.backgroundColor} rounded-xl items-center justify-center gap-3`}
