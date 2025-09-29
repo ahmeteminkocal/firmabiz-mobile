@@ -15,6 +15,7 @@ export default function SplashScreen() {
 
     return (
       <View className='flex-1 justify-center items-center'>
+        {/* --------------- Dialog Test ---------------  */}
         <Button
           variant={'link'}
           onPress={() => {
@@ -25,17 +26,6 @@ export default function SplashScreen() {
             Dialog Test
           </Text>
         </Button>
-        <Button
-          variant={'link'}
-          onPress={() => {
-            router.replace('/(protected)/(tabs)/finance/details')
-          }}
-          > 
-          <Text className='text-foreground'>
-            Home
-          </Text>
-        </Button>
-
         <Dialog 
           visible={dialogVisible} 
           setVisible={setDialogVisible}        
@@ -52,6 +42,30 @@ export default function SplashScreen() {
             />
           )} 
         />
+        {/* --------------- Home ---------------  */}
+        <Button
+          variant={'link'}
+          onPress={() => {
+            router.replace('/(protected)/(tabs)/home')
+          }}
+          > 
+          <Text className='text-foreground'>
+            Home
+          </Text>
+        </Button>
+        {/* --------------- Auth ---------------  */}
+        <Button
+          variant={'link'}
+          onPress={() => {
+            router.replace('/(auth)/signin')
+          }}
+          > 
+          <Text className='text-foreground'>
+            Auth
+          </Text>
+        </Button>
+
+        
       </View>
     )
 }

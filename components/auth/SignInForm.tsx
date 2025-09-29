@@ -24,10 +24,10 @@ export function SignInForm() {
   const [rememberMe, setRememberMe] = React.useState<boolean>(false);
 
   return (
-    <View className="flex-1 rounded-t-[35px] bg-background w-full self-stretch gap-6 p-8">
+    <View className="flex-1 rounded-t-[35px] bg-background w-full self-stretch gap-6 p-8 shadow-custom">
       <View className="gap-6">
         <View className="gap-1.5">
-          <Text>Email</Text>
+          <Text className='text-xs text-label'>Email or username</Text>
           <Controller
             control={control}
             name="email"
@@ -51,15 +51,13 @@ export function SignInForm() {
         </View>
         <View className="gap-1.5">
           <View className="flex-row justify-between items-center">
-            <Text>Password</Text>
-            <Button
-              variant="link"
-              className="ml-auto h-4 px-1 py-0 sm:h-4"
+            <Text className='text-xs text-label'>Password</Text>
+            <Pressable
               onPress={() => {
                 router.canGoBack()? router.back() : null
               }}>
-              <Text className="font-normal leading-4">Forgot your password?</Text>
-            </Button>
+              <Text className='text-xs text-primary'>Forgot your password?</Text>
+            </Pressable>
           </View>
 
           <Controller
@@ -92,19 +90,18 @@ export function SignInForm() {
           <Text>{loading? 'Loading' : 'Continue'}</Text>
         </Button>
       </View>
-      <View className='flex flex-row justify-center items-center'>
-        <Text className="text-center text-sm">
-          Don&apos;t have an account?{' '}
+      <View className='flex flex-row justify-center items-center gap-0'>
+        <Text className="text-center text-xs">
+          Are you new to the platform?{'  '}
         </Text>
-        <Pressable
+        <Button
+          variant={'link'}
+          className='p-0'
           onPress={() => {
             // TODO: Navigate to sign up screen
           }}>
-          <Text 
-          className="text-sm underline underline-offset-4"
-          >
-            Sign up</Text>
-        </Pressable>
+            <Text className='text-xs'>Create an account</Text>
+        </Button>
       </View>
     </View>
   );

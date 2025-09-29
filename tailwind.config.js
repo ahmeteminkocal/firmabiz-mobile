@@ -45,7 +45,7 @@ module.exports = {
           background: 'var(--tertiary-background)'
         },
         stroke: 'var(--stroke)',
-        placeholder: 'var(--placeholder)',
+        label: 'var(--label)',
         splash: 'var(--splash)',
         subtitle: 'var(--subtitle)',
       },

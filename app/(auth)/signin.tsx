@@ -16,12 +16,13 @@ export default function SignInScreen() {
           <Image
             resizeMode="contain"
             source={Assets.logo}
+            width={100}
             />
           <View className='items-center gap-2'>
-            <Text className='text-xl font-semibold'>
+            <Text className='text-xl text-label font-medium'>
               Welcome to Firmabiz! 👋🏻
             </Text>
-            <Text className='text-center'>
+            <Text className='text-center text-sm text-label'>
               Please log in to your account and start the adventure
             </Text>
           </View>

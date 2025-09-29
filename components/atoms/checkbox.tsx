@@ -24,7 +24,7 @@ function Checkbox({
     <View className='flex-row items-center gap-x-2'>
       <CheckboxPrimitive.Root
         className={cn(
-          'size-4 bg-foreground shrink-0 rounded-[4px] border border-placeholder',
+          'size-4 shrink-0 rounded-[4px] border border-label',
           'overflow-hidden',
           props.checked && cn('border-primary', checkedClassName),
           props.disabled && 'opacity-50',
@@ -43,7 +43,7 @@ function Checkbox({
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
 
-      <Text className='text-md text-placeholder'>{title}</Text>
+      <Text className='text-sm text-label'>{title}</Text>
     </View> 
 
   );

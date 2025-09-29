@@ -5,6 +5,7 @@ export const THEME = {
   primary: '#2092EC',
   secondary: '#349ECC',
 
+  label: '#4B465C',
   subtitle: '#75737F',
   tertiary: '#7367F0',
   
