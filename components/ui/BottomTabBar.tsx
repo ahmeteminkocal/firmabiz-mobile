@@ -35,46 +35,21 @@ export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
               navigation.navigate(route.name as never);
             }
           }
-
-          if(index === 1) {
-            return (
-              <Pressable
-                key={route.key}
-                onPress={() => {
+          return  (
+            <TabItem 
+              key={route.key} 
+              isPressed={index === 1 && tabPressed}
+              tabNavigate={
+                index === 1? 
+                () => {
                   if(!isFocused) {
                     setTabPressed(!tabPressed)
                   }
                   setBottomSheetVisible(!bottomSheetVisible);
-                }}
-                style={[styles.roundedButton, isFocused && {
-                  backgroundColor: THEME.secondary,
-              }]}>
-                <Icon
-                  name={MAIN_TABS[index].icon.name}
-                  width={22}
-                  color={isFocused? THEME.background : tabPressed? THEME.secondary : THEME.foreground}
-                />
-                {isFocused && <Text style={styles.roundedText}>{MAIN_TABS[index].label}</Text>}
-              </Pressable>
-            )
-          }
-
-
-          return  (
-            <Pressable
-              key={route.key}
-              onPress={tabNavigate}
-              style={[styles.roundedButton, isFocused && {
-                backgroundColor: THEME.secondary,
-            }]}>
-              <Icon
-                name={MAIN_TABS[index].icon.name}
-                width={22}
-                color={isFocused? THEME.background : THEME.foreground}
-              />
-              {isFocused && <Text style={styles.roundedText}>{MAIN_TABS[index].label}</Text>}
-            </Pressable>
-          
+                } 
+                : tabNavigate} 
+              isFocused={isFocused} 
+              index={index}/>
           );
         })}
       </View>
@@ -123,3 +98,27 @@ const styles = StyleSheet.create({
     elevation: 5,
   }
 });
+
+const TabItem = ({tabNavigate, isFocused, isPressed, index} : TabProps) => {
+  return  (
+    <Pressable
+      onPress={tabNavigate}
+      style={[styles.roundedButton, isFocused && {
+        backgroundColor: THEME.secondary,
+    }]}>
+      <Icon
+        name={MAIN_TABS[index].icon.name}
+        width={22}
+        color={isFocused? THEME.background : isPressed? THEME.secondary : THEME.foreground}
+      />
+      {isFocused && <Text style={styles.roundedText}>{MAIN_TABS[index].label}</Text>}
+    </Pressable>
+  );
+}
+
+type TabProps = {
+  tabNavigate: () => void, 
+  isFocused: boolean, 
+  isPressed: boolean,
+  index: number
+};
