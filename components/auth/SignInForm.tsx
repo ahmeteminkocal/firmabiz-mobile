@@ -37,6 +37,7 @@ export function SignInForm() {
                 id="email"
                 value={value}
                 onChangeText={onChange}
+                error={errors.email?.message}
                 placeholder="m@example.com"
                 keyboardType="email-address"
                 autoComplete="email"
@@ -44,7 +45,6 @@ export function SignInForm() {
                 returnKeyType="next"
                 submitBehavior="submit"
               />
-              {errors.email && <Text className='text-sm text-destructive'>{errors.email.message}</Text>}
             </>
           )}
         />
@@ -69,10 +69,10 @@ export function SignInForm() {
                   id="password"
                   value={value}
                   onChangeText={onChange}
+                  error={errors.password?.message}
                   secureTextEntry
                   returnKeyType="send"
                 />
-                {errors.password && <Text className='text-sm text-destructive'>{errors.password.message}</Text>}
               </>
               )}
           />
