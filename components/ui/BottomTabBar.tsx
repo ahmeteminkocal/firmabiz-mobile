@@ -6,35 +6,28 @@ import { THEME } from '@/lib/theme';
 import { BottomTabBarProps, BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers, NavigationRoute, ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { useState } from 'react';
-import { Pressable, StyleSheet, View } from "react-native";
-import Animated, { FadeInLeft, FadeInRight, FadeOut } from 'react-native-reanimated';
+import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import Animated, { withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
 
   const insets = useSafeAreaInsets();
   
-  
-  const [ currentTab , setCurrentTab ] = useState(0);
-
-  
   return (
-      <View 
-        style={[styles.tabBar, {paddingBottom: insets.bottom}]}
-      >
-        {state.routes.map((route, index) => {
-          
-          return  (
-            <TabItem 
-              key={route.key}
-              state={state} 
-              navigation={navigation} 
-              index={index} 
-              route={route}/>
-          );
-        })}
-      </View>
-      
+    <View 
+      style={[styles.tabBar, {paddingBottom: insets.bottom}]}>
+      {state.routes.map((route, index) => {
+        return  (
+          <TabItem 
+            key={route.key}
+            state={state} 
+            navigation={navigation} 
+            index={index} 
+            route={route}/>
+        );
+      })}
+    </View>
   );
 }
 
@@ -75,6 +68,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const TAB_ANIMATION_SIZE = Dimensions.get('window').width / 10;
+
 const TabItem = ({state, navigation, route, index} : TabProps) => {
 
   const [ bottomSheetVisible , setBottomSheetVisible] = useState(false);
@@ -91,15 +86,26 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
       canPreventDefault: true
     });
     if (!isFocused && !event.defaultPrevented) {
-      setAnimation(state.index < index? leftAnimation : rightAnimation);
+      setTranslateX(TAB_ANIMATION_SIZE*(state.index - index));
       navigation.navigate(route.name as never);
     }
   }
 
-  const [animation,  setAnimation] = useState<FadeInLeft | FadeInRight>();
+  const [translateX,  setTranslateX] = useState<number>(TAB_ANIMATION_SIZE);
 
-  const leftAnimation = FadeInLeft.duration(300);
-  const rightAnimation = FadeInRight.duration(300);
+
+  const CustomSlideIn = () => {
+    'worklet';
+    const animations = {
+      transform: [{
+          translateX: withTiming(0, { duration: 200 }),
+      }],
+    };
+    const initialValues = {
+      transform: [{ translateX: translateX }],
+    };
+    return { initialValues, animations };
+  };
 
 
   if(isFocused) {
@@ -107,8 +113,7 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
       <Pressable onPress={tabNavigate}>
         <Animated.View 
           style={[styles.roundedButton]}
-          entering={animation} 
-          exiting={FadeOut.duration(50)}>
+          entering={CustomSlideIn}>
           <Icon
             name={MAIN_TABS[index].icon.name}
             width={22}
@@ -119,6 +124,7 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
       </Pressable>
     )
   }
+
   return  (
     <Pressable onPress={tabNavigate} style={{paddingHorizontal: 16, paddingVertical: 5}}>
       <Icon
