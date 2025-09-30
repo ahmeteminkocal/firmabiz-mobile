@@ -1,64 +1,40 @@
 
-import BottomSheet from '@/components/atoms/bottomsheet';
 import { Icon } from '@/components/atoms/icon';
 import { Text } from '@/components/atoms/text';
-import { AccordionView } from '@/components/ui/AccordionView';
 import { BOTTOM_TAB_BAR_HEGHT, MAIN_TABS } from '@/lib/constants';
 import { THEME } from '@/lib/theme';
-import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { BottomTabBarProps, BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
+import { NavigationHelpers, NavigationRoute, ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from "react-native";
+import Animated, { FadeInLeft, FadeInRight, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
 
   const insets = useSafeAreaInsets();
   
-  const [ bottomSheetVisible , setBottomSheetVisible] = useState(false);
-  const [ tabPressed , setTabPressed ] = useState(false);
+  
+  const [ currentTab , setCurrentTab ] = useState(0);
+
   
   return (
-    <>
-      <View style={[styles.tabBar, {paddingBottom: insets.bottom}]}>
+      <View 
+        style={[styles.tabBar, {paddingBottom: insets.bottom}]}
+      >
         {state.routes.map((route, index) => {
-          const isFocused = state.index === index;
-
-          const tabNavigate = () => {
-            setBottomSheetVisible(false);
-            setTabPressed(false);
-            const event = navigation.emit({
-              type: "tabPress",
-              target: route.key,
-              canPreventDefault: true
-            });
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name as never);
-            }
-          }
+          
           return  (
             <TabItem 
-              key={route.key} 
-              isPressed={index === 1 && tabPressed}
-              tabNavigate={
-                index === 1? 
-                () => {
-                  if(!isFocused) {
-                    setTabPressed(!tabPressed)
-                  }
-                  setBottomSheetVisible(!bottomSheetVisible);
-                } 
-                : tabNavigate} 
-              isFocused={isFocused} 
-              index={index}/>
+              key={route.key}
+              state={state} 
+              navigation={navigation} 
+              index={index} 
+              route={route}/>
           );
         })}
       </View>
-      <BottomSheet
-        visible={bottomSheetVisible}
-        setVisible={setBottomSheetVisible}
-        builder={(<AccordionView/>)}
-      />
-    </>
+      
   );
 }
 
@@ -77,6 +53,7 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
   },
   roundedButton: {
+    backgroundColor: THEME.secondary,
     paddingHorizontal: 16,
     paddingVertical: 5,
     borderRadius: 25,
@@ -93,32 +70,69 @@ const styles = StyleSheet.create({
   topShadow: {
     shadowColor: "#23004C0D",
     shadowOffset: { width: 0, height: -3 },
-    // shadowOpacity: 0.4,
     shadowRadius: 12,
     elevation: 5,
   }
 });
 
-const TabItem = ({tabNavigate, isFocused, isPressed, index} : TabProps) => {
+const TabItem = ({state, navigation, route, index} : TabProps) => {
+
+  const [ bottomSheetVisible , setBottomSheetVisible] = useState(false);
+  const [ tabPressed , setTabPressed ] = useState(false);
+
+  const isFocused = state.index === index;
+
+  const tabNavigate = () => {
+    setBottomSheetVisible(false);
+    setTabPressed(false);
+    const event = navigation.emit({
+      type: "tabPress",
+      target: route.key,
+      canPreventDefault: true
+    });
+    if (!isFocused && !event.defaultPrevented) {
+      setAnimation(state.index < index? leftAnimation : rightAnimation);
+      navigation.navigate(route.name as never);
+    }
+  }
+
+  const [animation,  setAnimation] = useState<FadeInLeft | FadeInRight>();
+
+  const leftAnimation = FadeInLeft.duration(300);
+  const rightAnimation = FadeInRight.duration(300);
+
+
+  if(isFocused) {
+    return (
+      <Pressable onPress={tabNavigate}>
+        <Animated.View 
+          style={[styles.roundedButton]}
+          entering={animation} 
+          exiting={FadeOut.duration(50)}>
+          <Icon
+            name={MAIN_TABS[index].icon.name}
+            width={22}
+            color={THEME.background}
+          />
+          {isFocused && <Text style={styles.roundedText}>{MAIN_TABS[index].label}</Text>}
+        </Animated.View>
+      </Pressable>
+    )
+  }
   return  (
-    <Pressable
-      onPress={tabNavigate}
-      style={[styles.roundedButton, isFocused && {
-        backgroundColor: THEME.secondary,
-    }]}>
+    <Pressable onPress={tabNavigate} style={{paddingHorizontal: 16, paddingVertical: 5}}>
       <Icon
         name={MAIN_TABS[index].icon.name}
         width={22}
-        color={isFocused? THEME.background : isPressed? THEME.secondary : THEME.foreground}
+        color={tabPressed? THEME.secondary : THEME.foreground}
       />
-      {isFocused && <Text style={styles.roundedText}>{MAIN_TABS[index].label}</Text>}
     </Pressable>
   );
 }
 
 type TabProps = {
-  tabNavigate: () => void, 
-  isFocused: boolean, 
-  isPressed: boolean,
-  index: number
+  state: TabNavigationState<ParamListBase>, 
+  navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>, 
+  route: NavigationRoute<ParamListBase, string>
+  index: number, 
 };

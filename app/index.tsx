@@ -28,7 +28,7 @@ export default function SplashScreen() {
         <Button
           variant={'link'}
           onPress={() => {
-            router.replace('/(protected)/(tabs)/finance/details')
+            router.replace('/(protected)/(tabs)/home')
           }}
           > 
           <Text className='text-foreground'>
