@@ -26,6 +26,17 @@ export default function SplashScreen() {
             Dialog Test
           </Text>
         </Button>
+        <Button
+          variant={'link'}
+          onPress={() => {
+            router.replace('/(protected)/(tabs)/home')
+          }}
+          > 
+          <Text className='text-foreground'>
+            Home
+          </Text>
+        </Button>
+
         <Dialog 
           visible={dialogVisible} 
           setVisible={setDialogVisible}        
