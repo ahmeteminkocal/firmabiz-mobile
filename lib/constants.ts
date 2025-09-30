@@ -15,7 +15,7 @@ export const MAIN_TABS: TabsProps[] = [
   },
   {
     name: "management",
-    label: "Management",
+    label: "Finance Management",
     icon: {name: 'chart'}
   },
   {
@@ -25,7 +25,7 @@ export const MAIN_TABS: TabsProps[] = [
   },
   {
     name: "logs",
-    label: "Logs",
+    label: "System Logs",
     icon: {name: 'logs'}
   }
 ];

@@ -34,31 +34,33 @@ export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
 const styles = StyleSheet.create({
   tabBar: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
+    height: BOTTOM_TAB_BAR_HEGHT,
     backgroundColor: THEME.background,
     paddingTop: 24,
-    height: BOTTOM_TAB_BAR_HEGHT,
+    paddingHorizontal: 12,
     
     shadowColor: THEME.foreground, 
     shadowOffset: { width: 0, height: -3 }, 
     shadowOpacity: 0.1, 
     shadowRadius: 12,
+    elevation: 16,
   },
   roundedButton: {
     backgroundColor: THEME.secondary,
-    paddingHorizontal: 16,
-    paddingVertical: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
     borderRadius: 25,
     flexDirection: "row",
-    gap: 10,
+    gap: 4,
     justifyContent: "center",
     alignItems: "center",
   },
   roundedText: {
     color: THEME.background,
     fontSize: 12,
-    fontWeight: 600
+    fontWeight: 500
   },
   topShadow: {
     shadowColor: "#23004C0D",
@@ -98,7 +100,7 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
     'worklet';
     const animations = {
       transform: [{
-          translateX: withTiming(0, { duration: 200 }),
+          translateX: withTiming(0, { duration: 250 }),
       }],
     };
     const initialValues = {
@@ -116,7 +118,7 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
           entering={CustomSlideIn}>
           <Icon
             name={MAIN_TABS[index].icon.name}
-            width={22}
+            width={18}
             color={THEME.background}
           />
           {isFocused && <Text style={styles.roundedText}>{MAIN_TABS[index].label}</Text>}
@@ -124,15 +126,15 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
       </Pressable>
     )
   }
-
+  
   return  (
-    <Pressable onPress={tabNavigate} style={{paddingHorizontal: 16, paddingVertical: 5}}>
-      <Icon
-        name={MAIN_TABS[index].icon.name}
-        width={22}
-        color={tabPressed? THEME.secondary : THEME.foreground}
-      />
-    </Pressable>
+      <Pressable onPress={tabNavigate} style={{paddingHorizontal: 16, paddingVertical: 5}}>
+        <Icon
+          name={MAIN_TABS[index].icon.name}
+        width={24}
+          color={tabPressed? THEME.secondary : THEME.foreground}
+          />
+      </Pressable>
   );
 }
 
