@@ -54,7 +54,7 @@ export function SignInForm() {
             <Text className='text-xs text-label'>Password</Text>
             <Pressable
               onPress={() => {
-                router.canGoBack()? router.back() : null
+                router.push('/(auth)/reset-password');
               }}>
               <Text className='text-xs text-primary'>Forgot your password?</Text>
             </Pressable>
