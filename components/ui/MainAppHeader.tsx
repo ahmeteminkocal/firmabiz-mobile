@@ -1,21 +1,12 @@
-import { Icon } from "@/components/atoms/icon";
-import { MAIN_TABS } from "@/lib/constants";
 import { THEME } from "@/lib/theme";
-import { ParamListBase, RouteProp } from "@react-navigation/native";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
-export default function MainAppBar( route : RouteProp<ParamListBase, string>) {
-  const title = MAIN_TABS.find((tab) => tab.name === route.name)?.label;
-
+export default function MainAppHeader( {title, bottom = true} : {title: string, bottom: boolean}) {
   return (
     <View 
+      className={bottom? "border-b border-stroke" : ""}
       style={styles.appBar}>
-      <Pressable>
-        <Icon name="menu" width={24} color={THEME.background} />
-      </Pressable>
-
       <Text style={styles.appBarTitle}>{title}</Text>
-
       <Image
         source={{ uri: "https://i.pravatar.cc/100" }}
         style={styles.avatar}

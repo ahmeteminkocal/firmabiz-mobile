@@ -1,12 +1,26 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import TableCard from './TableCard';
 
 export function HomeTable(){
     return (
-      <View className='flex-1 bg-background px-4 pt-4 gap-2'>
+      <ScrollView bounces={false} contentContainerClassName='flex-grow bg-background px-4 py-4 gap-2'>
         <TableCard/>
-      </View>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+        <TableCard/>
+      </ScrollView>
     )
 }
 

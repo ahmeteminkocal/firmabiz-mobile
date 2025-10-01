@@ -1,17 +1,18 @@
 import DetailsCard from '@/components/home/DetailsCard';
+import { useAppHeader } from '@/lib/hooks/useAppHeader';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 export default function HomeDetailsScreen() {
 
     const { id } = useLocalSearchParams();
+
+    useAppHeader({ title: `Payment details ${id}`, bottom: true });
     
     return (
-        <View className='flex-1'>
-            <View className='flex-1 bg-background px-4 pt-4 gap-2'>
-                <DetailsCard/>
-            </View>
-        </View>
-  )
+        <ScrollView bounces={false} contentContainerClassName='flex-grow bg-background px-4 py-4 gap-2'>
+            <DetailsCard/>
+        </ScrollView>
+    )
 }

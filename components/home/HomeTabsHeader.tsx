@@ -14,7 +14,7 @@ type Props = {
 export default function HomeTabsHeader({activeTab, setActiveTab}: Props) {
 
   return (
-    <View className="flex-row justify-between items-center pt-4 px-4 bg-accent border-b border-stroke">
+    <View className="flex-row justify-between items-center pt-2 px-4 bg-accent border-b border-stroke">
       <View className="flex-row gap-6">
         {[HomeTab.Summary, HomeTab.Table].map((tab) => (
           <Pressable key={tab} onPress={() => setActiveTab(tab)}>
