@@ -1,5 +1,5 @@
-import HomeSummaryTab from '@/components/home/HomeSummaryTab';
-import HomeTableTab from '@/components/home/HomeTableTab';
+import HomeSummary from '@/components/home/HomeSummary';
+import HomeTable from '@/components/home/HomeTable';
 import HomeTabsHeader from '@/components/home/HomeTabsHeader';
 import { HomeTab } from '@/lib/types';
 import React, { useState } from 'react';
@@ -13,9 +13,9 @@ export default function HomeScreen() {
     <View className='flex-1'>
       <HomeTabsHeader activeTab={activeTab} setActiveTab={setActiveTab}/>
       {activeTab === HomeTab.Table? 
-        <HomeTableTab/>
+        <HomeTable/>
       : 
-        <HomeSummaryTab/>
+        <HomeSummary/>
       }
     </View>
   )

@@ -1,7 +1,7 @@
 import { Text } from '@/components/atoms/text';
 import { THEME } from "@/lib/theme";
 import { TriggerRef } from "@rn-primitives/dropdown-menu";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Icon } from "../atoms/icon";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/DropdownMenu";
 
@@ -23,12 +23,14 @@ const OPTIONS = [
 export function FileDownloadButton() {
 
     const menuRef = useRef<TriggerRef>(null);
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
-      <DropdownMenu>
+      <DropdownMenu onOpenChange={setIsMenuOpen}>
           <DropdownMenuTrigger ref={menuRef}>
-            <Icon name='fileDownload' width={24} color={THEME.foreground} />
+            <Icon name='fileDownload' width={24} color={isMenuOpen? THEME.primary : THEME.foreground} />
           </DropdownMenuTrigger> 
-          <DropdownMenuContent align="end" className="border border-border rounded-[6px] mt-1 gap-1 p-2">
+          <DropdownMenuContent align="end" className="border border-border rounded-[6px] mt-1.5 gap-1 p-2">
             {OPTIONS.map((option) => (
                 <DropdownMenuItem 
                     closeOnPress={false}
