@@ -16,7 +16,8 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
-        <StatusBar  style='dark'/>
+        <StatusBar  style='dark'/> 
+        {/* TODO: Also change Android NavBar to be dark */}
         <Stack 
           screenOptions={{headerShown: false}}
           />

@@ -1,3 +1,4 @@
+import { DetailsAccordionView } from '@/components/finance/DetailsAccordionView';
 import TransactionFilter from '@/components/finance/TransactionFilter';
 import WiredCard from '@/components/finance/WiredCard';
 import MainAppHeader from '@/components/ui/MainAppHeader';
@@ -11,7 +12,7 @@ export default function WiredScreen() {
       <MainAppHeader title={'Wired Transaction'}/>
       <ScrollView bounces={false} contentContainerClassName='flex-grow bg-background px-4 py-4 gap-2'>
         <TransactionFilter/>  
-        <WiredCard/>
+        <DetailsAccordionView/>
         <WiredCard/>
         <WiredCard/>
         <WiredCard/>

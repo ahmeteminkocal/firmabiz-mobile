@@ -1,4 +1,5 @@
 import { IconProps } from "@/components/atoms/icon";
+import { UniconName } from "@/components/unicons";
 
 export type TabsProps = {
   name: string;
@@ -18,4 +19,11 @@ export type ButtonAction = {
     'secondary' |
     'ghost' |
     'link'
+}
+
+export type IconButtonProps = {
+  icon: UniconName,
+  onPress: () => void,
+  size?: number,
+  color?: string,
 }
