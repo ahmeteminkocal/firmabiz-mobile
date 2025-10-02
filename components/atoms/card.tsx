@@ -8,6 +8,7 @@ export function Card({
 }: PressableProps){
     return (
         <Pressable 
+            pointerEvents={props.onPress? 'auto' : 'box-none'}
             className={cn(
                 'bg-background rounded-[5px] border border-border p-3',
                 className

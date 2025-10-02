@@ -1,5 +1,5 @@
 import DetailsCard from '@/components/home/DetailsCard';
-import { useAppHeader } from '@/lib/hooks/useAppHeader';
+import MainAppHeader from '@/components/ui/MainAppHeader';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { ScrollView } from 'react-native';
@@ -7,12 +7,22 @@ import { ScrollView } from 'react-native';
 export default function HomeDetailsScreen() {
 
     const { id } = useLocalSearchParams();
-
-    useAppHeader({ title: `Payment details ${id}`, bottom: true });
     
     return (
+        <>
+        <MainAppHeader title={'Details'} canGoBack={true}/>
         <ScrollView bounces={false} contentContainerClassName='flex-grow bg-background px-4 py-4 gap-2'>
             <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
+            <DetailsCard/>
         </ScrollView>
+        </>
     )
 }

@@ -14,7 +14,11 @@ export default function TabsLayout() {
           screenOptions={{
             headerShown: false, 
           }}>
-          
+          <Tabs.Screen name="home"/>
+          <Tabs.Screen name="finance"/>
+          <Tabs.Screen name="management"/> 
+          <Tabs.Screen name="platform"/> 
+          <Tabs.Screen name="logs"/> 
         </Tabs>
       </View>
     </View>

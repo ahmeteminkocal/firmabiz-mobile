@@ -1,4 +1,4 @@
-import { AngleDown, AngleLeft, AngleRight, AngleUp, ArrowGrowth, BitcoinSign, CalculatorAlt, ChartPieAlt, Check, FileDownload, Filter, HomeAlt, Layers, ListUl, MoneyBill, MoneyStack, MoneyWithdraw, User } from 'react-native-unicons';
+import { AngleDown, AngleLeft, AngleRight, AngleUp, ArrowGrowth, BitcoinSign, CalculatorAlt, ChartPieAlt, Check, Comment, Copy, FileDownload, Filter, Globe, HomeAlt, Info, Layers, ListUl, MoneyBill, MoneyStack, MoneyWithdraw, User } from 'react-native-unicons';
 
 export const unicons = {
   check: Check,
@@ -19,6 +19,10 @@ export const unicons = {
   bitcoinSign: BitcoinSign,
   moneyWithdraw: MoneyWithdraw,
   logs: Layers,
+  comment: Comment,
+  copy: Copy,
+  info: Info,
+  globe: Globe,
 } as const;
 
 

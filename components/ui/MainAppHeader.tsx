@@ -1,18 +1,54 @@
 import { THEME } from "@/lib/theme";
+import { Stack, useRouter } from "expo-router";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { Icon } from "../atoms/icon";
 
-export default function MainAppHeader( {title, bottom = true} : {title: string, bottom: boolean}) {
+type AppHeaderProps = {
+  title: string;
+  canGoBack?: boolean;
+  withAvatar?: boolean;
+  separated?: boolean;
+};
+
+
+export default function MainAppHeader( {
+  title,
+  canGoBack = false,
+  withAvatar = true,
+  separated = true,
+} : AppHeaderProps) {
+
+  const router = useRouter();
+
+  const showBackButton:boolean | undefined = 
+    canGoBack && 
+    router.canGoBack();
+
   return (
-    <View 
-      className={bottom? "border-b border-stroke" : ""}
-      style={styles.appBar}>
-      <Text style={styles.appBarTitle}>{title}</Text>
-      <Image
-        source={{ uri: "https://i.pravatar.cc/100" }}
-        style={styles.avatar}
-      />
-    </View>
-  );
+    <Stack.Screen 
+      options={{
+        headerShown: true, 
+        header: () => (
+          <View 
+            className={separated? 'border-b border-stroke' : ''}
+            style={styles.appBar}>
+
+            <View className="flex-row items-center gap-2">
+              {showBackButton && <Icon name="arrowLeft" width={28} height={28} onPress={() => router.back()}/>}
+              <Text style={styles.appBarTitle}>{title}</Text>
+            </View>
+
+            {withAvatar? 
+              <Image
+                source={{ uri: "https://i.pravatar.cc/100" }}
+                style={styles.avatar}
+              /> 
+              : <></>}
+          </View>
+          
+        )
+      }}/>
+    )
 }
 
 const styles = StyleSheet.create({
