@@ -7,7 +7,7 @@ import { BottomTabBarProps, BottomTabNavigationEventMap } from "@react-navigatio
 import { NavigationHelpers, NavigationRoute, ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { useState } from 'react';
 import { Dimensions, Pressable, StyleSheet, View } from "react-native";
-import Animated, { withTiming } from 'react-native-reanimated';
+import Animated, { FadeIn, LinearTransition, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const TAB_ANIMATION_SIZE = Dimensions.get('window').width / 10;
+const TAB_ANIMATION_SIZE = Dimensions.get('window').width / 9;
+const ANIMATION_DURATION = 250;
 
 const TabItem = ({state, navigation, route, index} : TabProps) => {
 
@@ -90,18 +91,20 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
     });
     if (!isFocused && !event.defaultPrevented) {
       setTranslateX(TAB_ANIMATION_SIZE*(state.index - index));
+      setDuration(ANIMATION_DURATION + 20*Math.abs(state.index - index));
       navigation.navigate(route.name as never);
     }
   }
 
   const [translateX,  setTranslateX] = useState<number>(TAB_ANIMATION_SIZE);
+  const [duration,  setDuration] = useState<number>(ANIMATION_DURATION);
 
 
   const CustomSlideIn = () => {
     'worklet';
     const animations = {
       transform: [{
-          translateX: withTiming(0, { duration: 250 }),
+          translateX: withTiming(0, { duration: duration }),
       }],
     };
     const initialValues = {
@@ -129,13 +132,15 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
   }
   
   return  (
+    <Animated.View entering={FadeIn.duration(ANIMATION_DURATION)} layout={LinearTransition.duration(ANIMATION_DURATION)}>
       <Pressable onPress={tabNavigate} style={{paddingVertical: 5}}>
-        <Icon
-          name={MAIN_TABS[index].icon.name}
-        width={24}
-          color={tabPressed? THEME.secondary : THEME.foreground}
+          <Icon
+            name={MAIN_TABS[index].icon.name}
+            width={22}
+            color={tabPressed? THEME.secondary : THEME.foreground}
           />
       </Pressable>
+    </Animated.View>
   );
 }
 
