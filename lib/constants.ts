@@ -20,7 +20,7 @@ export const MAIN_TABS: TabsProps[] = [
   },
   {
     name: "platform",
-    label: "Platform",
+    label: "Platform Management",
     icon: {name: 'profile'}
   },
   {

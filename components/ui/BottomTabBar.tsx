@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     height: BOTTOM_TAB_BAR_HEGHT,
     backgroundColor: THEME.background,
     paddingTop: 24,
-    paddingHorizontal: 12,
+    paddingHorizontal: 32,
+    gap: 0,
     
     shadowColor: THEME.foreground, 
     shadowOffset: { width: 0, height: -3 }, 
@@ -128,7 +129,7 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
   }
   
   return  (
-      <Pressable onPress={tabNavigate} style={{paddingHorizontal: 16, paddingVertical: 5}}>
+      <Pressable onPress={tabNavigate} style={{paddingVertical: 5}}>
         <Icon
           name={MAIN_TABS[index].icon.name}
         width={24}
