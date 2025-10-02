@@ -116,7 +116,7 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
 
   if(isFocused) {
     return (
-      <Pressable onPress={tabNavigate}>
+      <Pressable onPress={tabNavigate} style={{zIndex: 10}}>
         <Animated.View 
           style={[styles.roundedButton]}
           entering={CustomSlideIn}>
@@ -132,7 +132,7 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
   }
   
   return  (
-    <Animated.View entering={FadeIn.duration(ANIMATION_DURATION)} layout={LinearTransition.duration(ANIMATION_DURATION)}>
+    <Animated.View style={{zIndex: 1}} entering={FadeIn.duration(ANIMATION_DURATION)} layout={LinearTransition.duration(ANIMATION_DURATION)}>
       <Pressable onPress={tabNavigate} style={{paddingVertical: 5}}>
           <Icon
             name={MAIN_TABS[index].icon.name}
