@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 import { View } from 'react-native';
 import Animated, { interpolateColor, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated';
+import StatusIcon from '../ui/StatusIcon';
 
 const ANIMATION_DURATION = 300;
 
@@ -31,7 +32,8 @@ export default function WiredCard({isActive} : {isActive?: boolean}) {
             isActive && 'border-b-0 rounded-b-none')}>
             <View className='flex-row gap-2 justify-between items-center'>
                 <Card className='py-0 border-0 bg-[#F6F6F6]'><Text className='text-sm'>#...cc7baf80e7d1</Text></Card>
-                <View className='flex-row justify-center items-center gap-2'>
+                <View className='flex-row justify-center items-center gap-3'>
+                    <StatusIcon status={'failure'}/>
                     <Icon width={16} color={THEME.subtitle} name='comment'/>
                     <Icon width={16} color={THEME.subtitle} name='copy'/>
                 </View>
