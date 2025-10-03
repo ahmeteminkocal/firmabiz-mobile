@@ -7,7 +7,9 @@ export const THEME = {
 
   label: '#4B465C',
   subtitle: '#75737F',
+
   tertiary: '#7367F0',
+  tertiaryBackground: '#F3F2FE',
   
   border: '#EEEEEE',
   stroke: '#B7CBDB',

@@ -34,7 +34,7 @@ export default function MainAppHeader( {
             style={styles.appBar}>
 
             <View className="flex-row items-center gap-2">
-              {showBackButton && <Icon name="arrowLeft" width={28} height={28} onPress={() => router.back()}/>}
+              {showBackButton && <Icon name="arrowLeft" color={'black'} width={28} height={28} onPress={() => router.back()}/>}
               <Text style={styles.appBarTitle}>{title}</Text>
             </View>
 
@@ -57,7 +57,8 @@ appBar: {
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingTop: 20,
+    paddingBottom: 8,
     backgroundColor: THEME.background,
   },
 appBarTitle: {

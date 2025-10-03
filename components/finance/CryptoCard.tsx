@@ -2,34 +2,18 @@ import Card from '@/components/atoms/card';
 import { Icon } from '@/components/atoms/icon';
 import { Text } from '@/components/atoms/text';
 import { THEME } from '@/lib/theme';
-import { cn } from '@/lib/utils';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
-import Animated, { interpolateColor, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated';
 import SvgIcon from '../ui/SvgIcon';
 
-const ANIMATION_DURATION = 300;
 
-export default function WiredCard({isActive} : {isActive?: boolean}) {
+export default function CryptoCard() {
 
-    const progress = useDerivedValue(
-        () => (isActive ? withTiming(1, { duration: ANIMATION_DURATION }) : withTiming(0, { duration: ANIMATION_DURATION })),
-        [isActive]
-    );
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            backgroundColor: interpolateColor(
-            progress.value,
-            [0, 1],
-            [THEME.background, THEME.splash]
-            ),
-        };
-    });
+    const router = useRouter();
       
     return (
-        <Animated.View style={animatedStyle} className={cn(
-            'w-full rounded-[5px] border border-border p-3 gap-2',
-            isActive && 'border-b-0 rounded-b-none')}>
+        <Card className='gap-2' onPress={() => {router.push('/finance/crypto/details/1')}}>
             <View className='flex-row gap-2 justify-between items-center'>
                 <Card className='py-0 border-0 bg-[#F6F6F6]'><Text className='text-sm'>#...cc7baf80e7d1</Text></Card>
                 <View className='flex-row justify-center items-center gap-3'>
@@ -39,19 +23,14 @@ export default function WiredCard({isActive} : {isActive?: boolean}) {
                 </View>
             </View>
 
-            <View className='flex-row gap-2 justify-between items-center'>
+            <View className='flex-row justify-start items-center gap-2'>
+                <SvgIcon name='crypto' size={26}/>
                 <Text className='text-lg text-foreground font-extrabold'>1,000.00 ₺</Text>
-                <View className='flex-row gap-2 justify-between items-center'>
-                    <Text className='text-sm'>Multipay</Text>
-                    <Card className='px-1 py-0.5 border-0 bg-[#D00A0A0F]'>
-                        <Text className='text-xs text-[#D00A0A]'>610 ms</Text>
-                    </Card>
-                </View>
-
+                <Text className='text-sm'>11.00 DOGE</Text>
             </View>
 
-            <View className='flex-row gap-2 justify-between items-center'>
-                <Text className='text-sm text-subtitle'>TR240011100000000121277624</Text>
+            <View className='flex-row gap-2 justify-start items-center'>
+                <Text className='text-sm text-subtitle'>DOGE  |  0x761E94c79053d8A407D39CB9...</Text>
                 <Icon width={16} color={THEME.subtitle} name='copy'/>
             </View>
 
@@ -66,6 +45,6 @@ export default function WiredCard({isActive} : {isActive?: boolean}) {
                 </View>
                 <Text className='text-sm text-subtitle'>02.09.2025 - 15:23:28</Text>
             </View>
-        </Animated.View>
+        </Card>
     )
 }
