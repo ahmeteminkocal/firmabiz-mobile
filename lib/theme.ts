@@ -12,7 +12,7 @@ export const THEME = {
   border: '#EEEEEE',
   stroke: '#B7CBDB',
   input: '#DBDADE',
-  muted: 'B7CBDB',
+  muted: '#B7CBDB',
   destructive: '#EA5455',
   splash: '#B7CBDB26'
 };

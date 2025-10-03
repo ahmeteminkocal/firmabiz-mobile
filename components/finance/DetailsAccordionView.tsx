@@ -3,8 +3,6 @@ import Accordion from 'react-native-collapsible/Accordion';
 import WiredCard from './WiredCard';
 import WiredDetails from './WiredDetails';
 
-const ANIMATION_DURATION = 200;
-
 type ItemProps = {section: string, index: number, isActive: boolean};
 
 function RenderHeader({section, index, isActive} : ItemProps) {
@@ -46,7 +44,7 @@ export function DetailsAccordionView() {
         setActiveSections(indexes);
       }}
       underlayColor='transperant'
-      duration={2000}
+      duration={300}
     />
   );
 }

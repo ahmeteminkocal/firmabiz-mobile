@@ -7,7 +7,7 @@ import React from 'react';
 import { View } from 'react-native';
 import Animated, { interpolateColor, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated';
 
-const ANIMATION_DURATION = 2000;
+const ANIMATION_DURATION = 300;
 
 export default function WiredCard({isActive} : {isActive?: boolean}) {
 
@@ -20,7 +20,7 @@ export default function WiredCard({isActive} : {isActive?: boolean}) {
             backgroundColor: interpolateColor(
             progress.value,
             [0, 1],
-            [THEME.background, '#75737F0F']
+            [THEME.background, '#F6F6F6']
             ),
         };
     });
