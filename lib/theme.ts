@@ -14,5 +14,5 @@ export const THEME = {
   input: '#DBDADE',
   muted: '#B7CBDB',
   destructive: '#EA5455',
-  splash: '#B7CBDB26'
+  splash: '#F7F7F7'
 };

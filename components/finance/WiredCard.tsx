@@ -20,7 +20,7 @@ export default function WiredCard({isActive} : {isActive?: boolean}) {
             backgroundColor: interpolateColor(
             progress.value,
             [0, 1],
-            [THEME.background, '#F6F6F6']
+            [THEME.background, THEME.splash]
             ),
         };
     });
