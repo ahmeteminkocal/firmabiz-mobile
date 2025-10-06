@@ -1,5 +1,6 @@
 import Card from '@/components/atoms/card';
 import { Icon } from '@/components/atoms/icon';
+import LabelChip from '@/components/atoms/LabelChip';
 import { Text } from '@/components/atoms/text';
 import CryptoAccordionView from '@/components/ui/CryptoAccordionView';
 import MainAppHeader from '@/components/ui/MainAppHeader';
@@ -17,8 +18,8 @@ export default function CryptoDetailsScreen() {
                         <Text className='text-sm text-subtitle'>api.kralhavale.com/check/status...</Text>
                         <View className='flex-row justify-center items-center gap-2'>
                             <Icon name='copy' color={THEME.subtitle} width={16} height={16}/>
-                            <Text className='text-xs'>GET</Text>
-                            <Text className='text-xs'>OUT</Text>
+                            <LabelChip label='OUT' color='#50A864' backgroundColor='#DCEEE0'/>
+                            <LabelChip label='GET' color='#A8509C' backgroundColor='#EDDCEE'/>
                         </View>
                     </View>
                     <Text className='text-lg text-foreground font-extrabold'>200</Text>
@@ -39,6 +40,7 @@ export default function CryptoDetailsScreen() {
                     <Text className='text-xs text-[#2FA305]'>211.38596534729004</Text>
                     <CryptoAccordionView />
                 </Card>
+                
             </ScrollView>
         </>
     )
