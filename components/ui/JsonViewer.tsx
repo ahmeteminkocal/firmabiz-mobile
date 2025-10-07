@@ -14,6 +14,7 @@ const JsonViewer = ( {data} : {data: {},}) => {
   return (
     <ScrollView 
       horizontal 
+      showsHorizontalScrollIndicator={false}
       bounces={false}>
       <JSONTree 
         data={data}     
@@ -21,7 +22,7 @@ const JsonViewer = ( {data} : {data: {},}) => {
         theme={{
           extend: 'harmonic',
           tree: () => ({ 
-            className: 'bg-background',
+            className: 'bg-background p-3',
           })
         }}
       />

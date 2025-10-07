@@ -18,7 +18,7 @@ function RenderContent({section, index, isActive} : ItemProps) {
     );
   };
 
-export function DetailsAccordionView() {  
+export function WiredAccordionView() {  
 
   const [ activeSections, setActiveSections] = useState<number[]>([]);  
 
