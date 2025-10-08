@@ -15,7 +15,11 @@ const SECTIONS = [
   'Other',
 ];
 
-type ItemProps = {section: string, index: number, isActive: boolean};
+type ItemProps = {
+  section: string, 
+  index: number, 
+  isActive: boolean, 
+  onSelect: (section: string, type: string) => void};
 
 function RenderHeader({section, index, isActive} : ItemProps) {
 
@@ -64,16 +68,16 @@ function RenderHeader({section, index, isActive} : ItemProps) {
   );
 };
 
-  function RenderFooter ({section, index, isActive} : ItemProps) {
-    return (
-      <View className={cn(
-        'w-full px-2',
-        index !== SECTIONS.length - 1 && 'my-2 border-b border-[#349ECC4D]'
-      )}/>
-    );
-  };
+function RenderFooter ({section, index, isActive} : ItemProps) {
+  return (
+    <View className={cn(
+      'w-full px-2',
+      index !== SECTIONS.length - 1 && 'my-2 border-b border-[#349ECC4D]'
+    )}/>
+  );
+};
 
-  function RenderContent({section, index, isActive} : ItemProps) {
+function RenderContent({section, index, isActive, onSelect} : ItemProps) {
 
   const progress = useDerivedValue(
     () => (isActive ? withTiming(1, { duration: ANIMATION_DURATION }) : withTiming(0, { duration: ANIMATION_DURATION })),
@@ -89,11 +93,11 @@ function RenderHeader({section, index, isActive} : ItemProps) {
     };
   });
 
-    return (
+  return (
     <Animated.View 
       style={contentAnimatedStyle}
       className='flex-row justify-center items-center gap-2 px-2 pb-2 rounded-b-[8px]'>
-        <Button className='bg-background flex-1'>
+        <Button className='bg-background flex-1' onPress={() => onSelect(section, 'withdrawal')}>
           <Text className='text-[#5D5D5D]'>Withdrawal</Text>
         </Button>
         <Button className='bg-background flex-1'>
@@ -103,7 +107,7 @@ function RenderHeader({section, index, isActive} : ItemProps) {
     );
   };
 
-export function AccordionView() {  
+export function FinanceAccordionView({onSelect} : {onSelect: (section: string, type: string) => void}) {  
   const [ activeSections, setActiveSections] = useState<number[]>([])  
   return (
     <View className='flex bg-background rounded-t-[8px] p-2'>
@@ -114,19 +118,22 @@ export function AccordionView() {
           <RenderHeader 
             section={content} 
             index={index} 
-            isActive={isActive}/>
+            isActive={isActive}
+            onSelect={onSelect}/>
         )}
         renderContent={(content, index, isActive) => (
           <RenderContent 
             section={content} 
             index={index} 
-            isActive={isActive}/>
+            isActive={isActive}
+            onSelect={onSelect}/>
         )}
         renderFooter={(content, index, isActive) => (
           <RenderFooter 
             section={content} 
             index={index} 
-            isActive={isActive}/>
+            isActive={isActive}
+            onSelect={onSelect}/>
         )}
         onChange={(indexes) => {
           setActiveSections(indexes);
