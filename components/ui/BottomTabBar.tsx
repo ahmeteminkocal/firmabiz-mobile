@@ -9,25 +9,37 @@ import { useState } from 'react';
 import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import Animated, { FadeIn, LinearTransition, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import BottomSheet from '../atoms/bottomsheet';
+import { FinanceAccordionView } from './FinanceAccordionView';
 
 export default function BottomTabBar({ state, navigation }: BottomTabBarProps) {
 
   const insets = useSafeAreaInsets();
+  const [ bottomSheetVisible , setBottomSheetVisible] = useState(false);
   
   return (
-    <View 
-      style={[styles.tabBar, {paddingBottom: insets.bottom}]}>
-      {state.routes.map((route, index) => {
-        return  (
-          <TabItem 
+    <>
+      <View 
+        style={[styles.tabBar, {paddingBottom: insets.bottom}]}>
+        {state.routes.map((route, index) => {
+          return  (
+            <TabItem 
             key={route.key}
             state={state} 
             navigation={navigation} 
             index={index} 
             route={route}/>
-        );
-      })}
-    </View>
+          );
+        })}
+      </View>
+      <BottomSheet
+        visible={bottomSheetVisible}
+        setVisible={setBottomSheetVisible}
+        builder={(<FinanceAccordionView onSelect={(section, type) => {
+          // TODO: call tabNavigate 
+        }}/>)}
+      />
+    </>
   );
 }
 
@@ -71,19 +83,14 @@ const styles = StyleSheet.create({
   }
 });
 
-const TAB_ANIMATION_SIZE = Dimensions.get('window').width / 9;
-const ANIMATION_DURATION = 250;
-
 const TabItem = ({state, navigation, route, index} : TabProps) => {
 
-  const [ bottomSheetVisible , setBottomSheetVisible] = useState(false);
-  const [ tabPressed , setTabPressed ] = useState(false);
-
+  const [tabPressed , setTabPressed ] = useState(false);
   const isFocused = state.index === index;
+  const [translateX,  setTranslateX] = useState<number>(TAB_ANIMATION_SIZE);
+  const [duration,  setDuration] = useState<number>(ANIMATION_DURATION);
 
-  const tabNavigate = () => {
-    setBottomSheetVisible(false);
-    setTabPressed(false);
+  const tabNavigate = (screen?: string) => {
     const event = navigation.emit({
       type: "tabPress",
       target: route.key,
@@ -92,13 +99,11 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
     if (!isFocused && !event.defaultPrevented) {
       setTranslateX(TAB_ANIMATION_SIZE*(state.index - index));
       setDuration(ANIMATION_DURATION + 20*Math.abs(state.index - index));
-      navigation.navigate(route.name as never);
+      screen? 
+        navigation.navigate(route.name, {screen: screen}) :
+        navigation.navigate(route.name as never);
     }
   }
-
-  const [translateX,  setTranslateX] = useState<number>(TAB_ANIMATION_SIZE);
-  const [duration,  setDuration] = useState<number>(ANIMATION_DURATION);
-
 
   const CustomSlideIn = () => {
     'worklet';
@@ -112,11 +117,9 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
     };
     return { initialValues, animations };
   };
-
-
-  if(isFocused) {
-    return (
-      <Pressable onPress={tabNavigate} style={{zIndex: 10}}>
+  
+  return  ( isFocused? 
+    <Pressable onPress={() => tabNavigate()} style={{zIndex: 10}}>
         <Animated.View 
           style={[styles.roundedButton]}
           entering={CustomSlideIn}>
@@ -127,13 +130,10 @@ const TabItem = ({state, navigation, route, index} : TabProps) => {
           />
           {isFocused && <Text style={styles.roundedText}>{MAIN_TABS[index].label}</Text>}
         </Animated.View>
-      </Pressable>
-    )
-  }
-  
-  return  (
+    </Pressable> 
+    :
     <Animated.View style={{zIndex: 1}} entering={FadeIn.duration(ANIMATION_DURATION)} layout={LinearTransition.duration(ANIMATION_DURATION)}>
-      <Pressable onPress={tabNavigate} style={{paddingVertical: 5}}>
+      <Pressable onPress={() => tabNavigate()} style={{paddingVertical: 5}}>
           <Icon
             name={MAIN_TABS[index].icon.name}
             width={22}
@@ -150,3 +150,6 @@ type TabProps = {
   route: NavigationRoute<ParamListBase, string>
   index: number, 
 };
+
+const TAB_ANIMATION_SIZE = Dimensions.get('window').width / 9;
+const ANIMATION_DURATION = 250;
