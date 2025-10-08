@@ -1,5 +1,5 @@
 import { Text } from '@/components/atoms/text';
-import { cn } from '@/lib/utils';
+import { cn, pascal } from '@/lib/utils';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -7,21 +7,24 @@ import Animated, { interpolateColor, useAnimatedStyle, useDerivedValue, withTimi
 import { Button } from '../atoms/button';
 import { Icon } from '../atoms/icon';
 
+type Section = 'wired' | 'crypto' | 'other';
+type TransactoinType = 'withdrawal' | 'deposit';
+
 const ANIMATION_DURATION = 300;
 
 const SECTIONS = [
-  'Wired',
-  'Crypto',
-  'Other',
+  'wired',
+  'crypto',
+  'other',
 ];
 
 type ItemProps = {
-  section: string, 
+  section: Section, 
   index: number, 
   isActive: boolean, 
-  onSelect: (section: string, type: string) => void};
+  onSelect: (section: Section, type: TransactoinType) => void};
 
-function RenderHeader({section, index, isActive} : ItemProps) {
+function RenderHeader({section, isActive} : ItemProps) {
 
   const progress = useDerivedValue(
     () => (isActive ? withTiming(1, { duration: ANIMATION_DURATION }) : withTiming(0, { duration: ANIMATION_DURATION })),
@@ -53,7 +56,7 @@ function RenderHeader({section, index, isActive} : ItemProps) {
           'text-left text text-[#5D5D5D]',
           isActive && 'font-bold'
         )}
-      >{section}</Text>
+      >{pascal(section)}</Text>
       <Animated.View style={chevronStyle}>
         <Icon
           name='arrowDown'
@@ -68,7 +71,7 @@ function RenderHeader({section, index, isActive} : ItemProps) {
   );
 };
 
-function RenderFooter ({section, index, isActive} : ItemProps) {
+function RenderFooter ({index} : ItemProps) {
   return (
     <View className={cn(
       'w-full px-2',
@@ -77,7 +80,7 @@ function RenderFooter ({section, index, isActive} : ItemProps) {
   );
 };
 
-function RenderContent({section, index, isActive, onSelect} : ItemProps) {
+function RenderContent({section, isActive, onSelect} : ItemProps) {
 
   const progress = useDerivedValue(
     () => (isActive ? withTiming(1, { duration: ANIMATION_DURATION }) : withTiming(0, { duration: ANIMATION_DURATION })),
@@ -100,14 +103,16 @@ function RenderContent({section, index, isActive, onSelect} : ItemProps) {
         <Button className='bg-background flex-1' onPress={() => onSelect(section, 'withdrawal')}>
           <Text className='text-[#5D5D5D]'>Withdrawal</Text>
         </Button>
-        <Button className='bg-background flex-1'>
+        <Button className='bg-background flex-1' onPress={() => onSelect(section, 'deposit')}>
           <Text className='text-[#5D5D5D]'>Deposit</Text>
         </Button>
       </Animated.View>
     );
   };
 
-export function FinanceAccordionView({onSelect} : {onSelect: (section: string, type: string) => void}) {  
+
+export function FinanceAccordionView({onSelect} : 
+  {onSelect: (section: Section, type: TransactoinType) => void}) {  
   const [ activeSections, setActiveSections] = useState<number[]>([])  
   return (
     <View className='flex bg-background rounded-t-[8px] p-2'>
@@ -116,21 +121,21 @@ export function FinanceAccordionView({onSelect} : {onSelect: (section: string, t
         activeSections={activeSections}
         renderHeader={(content, index, isActive) => (
           <RenderHeader 
-            section={content} 
+            section={content as Section} 
             index={index} 
             isActive={isActive}
             onSelect={onSelect}/>
         )}
         renderContent={(content, index, isActive) => (
           <RenderContent 
-            section={content} 
+            section={content as Section} 
             index={index} 
             isActive={isActive}
             onSelect={onSelect}/>
         )}
         renderFooter={(content, index, isActive) => (
           <RenderFooter 
-            section={content} 
+            section={content as Section} 
             index={index} 
             isActive={isActive}
             onSelect={onSelect}/>

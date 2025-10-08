@@ -53,7 +53,11 @@ export default function BottomTabBar({ state }: BottomTabBarProps) {
         builder={(
           <FinanceAccordionView
             onSelect={(section, type) => {
-              tabNavigate(1, '/(protected)/(tabs)/finance/wired/w'); 
+              if(section === 'crypto') {
+                tabNavigate(1, `/(protected)/(tabs)/finance/${section}/data/${type}`); 
+              } else {
+                tabNavigate(1, `/(protected)/(tabs)/finance/${section}/${type}`); 
+              }
               setBottomSheetVisible(false);
             }}
           />
@@ -121,8 +125,19 @@ const TabItem = ({ state, index, tabNavigate, translateX, duration }: TabProps) 
     return { initialValues, animations };
   };
 
+  const tabAction = (index: number) => {
+    if(index === 0) {
+      if(isFocused) {
+        return;
+      }
+      tabNavigate(0, '/(protected)/(tabs)/home');
+    } else {
+      tabNavigate(index);
+    }
+  }
+
   return isFocused ? (
-    <Pressable onPress={() => tabNavigate(index)} style={{ zIndex: 10 }}>
+    <Pressable onPress={() => tabAction(index)} style={{ zIndex: 10 }}>
       <Animated.View style={[styles.roundedButton]} entering={CustomSlideIn}>
         <Icon
           name={MAIN_TABS[index].icon.name}
@@ -138,7 +153,7 @@ const TabItem = ({ state, index, tabNavigate, translateX, duration }: TabProps) 
       entering={FadeIn.duration(ANIMATION_DURATION)}
       layout={LinearTransition.duration(ANIMATION_DURATION)}
     >
-      <Pressable onPress={() => tabNavigate(index)} style={{ paddingVertical: 5 }}>
+      <Pressable onPress={() => tabAction(index)} style={{ paddingVertical: 5 }}>
         <Icon
           name={MAIN_TABS[index].icon.name}
           width={22}
