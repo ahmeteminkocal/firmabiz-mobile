@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
 
 interface BottomSheetParams {
   builder: React.ReactElement,
@@ -24,7 +24,7 @@ const BottomSheet = ({builder, visible, setVisible}: BottomSheetParams) => {
       />
 
       {/* Bottom sheet */}
-      <Animated.View style={styles.sheetContainer} entering={FadeInDown.duration(100)}>
+      <Animated.View style={styles.sheetContainer} entering={FadeInDown.duration(100)} exiting={FadeOutDown.duration(100)}>
         {builder}
       </Animated.View>
     </View>

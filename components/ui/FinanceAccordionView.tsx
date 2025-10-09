@@ -1,4 +1,5 @@
 import { Text } from '@/components/atoms/text';
+import { Section, useFinanceStore } from '@/lib/stores/financeStore';
 import { cn, pascal } from '@/lib/utils';
 import React, { useState } from 'react';
 import { View } from 'react-native';
@@ -6,9 +7,6 @@ import Accordion from 'react-native-collapsible/Accordion';
 import Animated, { interpolateColor, useAnimatedStyle, useDerivedValue, withTiming } from 'react-native-reanimated';
 import { Button } from '../atoms/button';
 import { Icon } from '../atoms/icon';
-
-type Section = 'wired' | 'crypto' | 'other';
-type TransactoinType = 'withdrawal' | 'deposit';
 
 const ANIMATION_DURATION = 300;
 
@@ -22,7 +20,7 @@ type ItemProps = {
   section: Section, 
   index: number, 
   isActive: boolean, 
-  onSelect: (section: Section, type: TransactoinType) => void};
+  onSelect: () => void};
 
 function RenderHeader({section, isActive} : ItemProps) {
 
@@ -96,14 +94,26 @@ function RenderContent({section, isActive, onSelect} : ItemProps) {
     };
   });
 
+  const { setParams } = useFinanceStore();
+
   return (
     <Animated.View 
       style={contentAnimatedStyle}
       className='flex-row justify-center items-center gap-2 px-2 pb-2 rounded-b-[8px]'>
-        <Button className='bg-background flex-1' onPress={() => onSelect(section, 'withdrawal')}>
+        <Button className='bg-background flex-1' 
+          onPress={() => {
+            setParams({section: section, type: 'withdrawal'})
+            onSelect()
+          }
+        }>
           <Text className='text-[#5D5D5D]'>Withdrawal</Text>
         </Button>
-        <Button className='bg-background flex-1' onPress={() => onSelect(section, 'deposit')}>
+        <Button className='bg-background flex-1' 
+          onPress={() => {
+            setParams({section: section, type: 'deposit'}) 
+            onSelect()
+          }
+        }>
           <Text className='text-[#5D5D5D]'>Deposit</Text>
         </Button>
       </Animated.View>
@@ -111,8 +121,8 @@ function RenderContent({section, isActive, onSelect} : ItemProps) {
   };
 
 
-export function FinanceAccordionView({onSelect} : 
-  {onSelect: (section: Section, type: TransactoinType) => void}) {  
+export function FinanceAccordionView({onSelect} : {onSelect: () => void}) {  
+  
   const [ activeSections, setActiveSections] = useState<number[]>([])  
   return (
     <View className='flex bg-background rounded-t-[8px] p-2'>

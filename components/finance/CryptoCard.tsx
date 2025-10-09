@@ -13,7 +13,7 @@ export default function CryptoCard() {
     const router = useRouter();
       
     return (
-        <Card className='gap-2' onPress={() => {router.push('/finance/crypto/details/1')}}>
+        <Card className='gap-2' onPress={() => {router.push('/finance/crypto-details/1')}}>
             <View className='flex-row gap-2 justify-between items-center'>
                 <Card className='py-0 border-0 bg-[#F6F6F6]'><Text className='text-sm'>#...cc7baf80e7d1</Text></Card>
                 <View className='flex-row justify-center items-center gap-3'>

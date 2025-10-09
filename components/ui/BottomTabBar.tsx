@@ -4,7 +4,6 @@ import { BOTTOM_TAB_BAR_HEGHT, MAIN_TABS } from '@/lib/constants';
 import { THEME } from '@/lib/theme';
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
-import { Href, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import Animated, { FadeIn, LinearTransition, withTiming } from 'react-native-reanimated';
@@ -12,25 +11,36 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BottomSheet from '../atoms/bottomsheet';
 import { FinanceAccordionView } from './FinanceAccordionView';
 
-export default function BottomTabBar({ state }: BottomTabBarProps) {
+export default function BottomTabBar({ state , navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const [translateX, setTranslateX] = useState<number>(TAB_ANIMATION_SIZE);
   const [duration, setDuration] = useState<number>(ANIMATION_DURATION);
-  const router = useRouter();
 
-  const tabNavigate = (index: number, screen?: Href) => {
-    if(!screen) {
-      setBottomSheetVisible(!bottomSheetVisible);
-      return;
-    }
-
+  const updateAnimationConfig = (index: number) => {
     const isFocused = state.index === index;
     if (!isFocused) {
       setTranslateX(TAB_ANIMATION_SIZE * (state.index - index));
       setDuration(ANIMATION_DURATION + 20 * Math.abs(state.index - index));
     }
-    router.push(screen)
+  }
+
+  const tabNavigate = (index: number, navigate: boolean) => {
+    if(!navigate) {
+      setBottomSheetVisible(!bottomSheetVisible);
+      return;
+    }
+    updateAnimationConfig(index);
+    const route = state.routes[index];
+    const event = navigation.emit({
+      type: "tabPress",
+      target: route.key,
+      canPreventDefault: true
+    });
+    const isFocused = state.index === index;
+    if (!isFocused && !event.defaultPrevented) {
+      navigation.navigate(route.name as never);
+    } 
   };
 
   return (
@@ -52,13 +62,9 @@ export default function BottomTabBar({ state }: BottomTabBarProps) {
         setVisible={setBottomSheetVisible}
         builder={(
           <FinanceAccordionView
-            onSelect={(section, type) => {
-              if(section === 'crypto') {
-                tabNavigate(1, `/(protected)/(tabs)/finance/${section}/data/${type}`); 
-              } else {
-                tabNavigate(1, `/(protected)/(tabs)/finance/${section}/${type}`); 
-              }
+            onSelect={() => {
               setBottomSheetVisible(false);
+              tabNavigate(1, true);
             }}
           />
         )}
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
 type TabProps = {
   state: TabNavigationState<ParamListBase>;
   index: number;
-  tabNavigate: (index: number, screen?: Href) => void;
+  tabNavigate: (index: number, navigate: boolean) => void;
   translateX: number;
   duration: number;
 };
@@ -130,9 +136,10 @@ const TabItem = ({ state, index, tabNavigate, translateX, duration }: TabProps) 
       if(isFocused) {
         return;
       }
-      tabNavigate(0, '/(protected)/(tabs)/home');
+      tabNavigate(0, true);
     } else {
-      tabNavigate(index);
+      tabNavigate(index, false);
+      setTabPressed(!tabPressed);
     }
   }
 

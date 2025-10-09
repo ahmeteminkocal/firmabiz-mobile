@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native';
 export default function HomeDetailsScreen() {
 
     const { id } = useLocalSearchParams();
+    console.log('Home Details:', id);
     
     return (
         <>
