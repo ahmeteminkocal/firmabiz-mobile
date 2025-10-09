@@ -1,6 +1,16 @@
 import { IconProps } from "@/components/atoms/icon";
 import { UniconName } from "@/components/unicons";
 
+export enum MainTab  {
+  Home = 0, 
+  Finance = 1,
+  FinanceManagement = 2,
+  PlatformManagement = 3,
+  SystemLogs = 4,
+  None = -1
+};
+
+
 export type TabsProps = {
   name: string;
   label: string;

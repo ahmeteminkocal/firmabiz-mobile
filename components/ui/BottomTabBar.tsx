@@ -2,6 +2,7 @@ import { Icon } from '@/components/atoms/icon';
 import { Text } from '@/components/atoms/text';
 import { BOTTOM_TAB_BAR_HEGHT, MAIN_TABS } from '@/lib/constants';
 import { THEME } from '@/lib/theme';
+import { MainTab } from '@/lib/types';
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { ParamListBase, TabNavigationState } from '@react-navigation/native';
 import { useState } from 'react';
@@ -13,7 +14,10 @@ import { FinanceAccordionView } from './FinanceAccordionView';
 
 export default function BottomTabBar({ state , navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+
+  const [bottomSheetVisible, setBottomSheetVisible] = useState<MainTab>(MainTab.None);
+  const [tabPressed, setTabPressed] = useState<MainTab>(MainTab.None);
+
   const [translateX, setTranslateX] = useState<number>(TAB_ANIMATION_SIZE);
   const [duration, setDuration] = useState<number>(ANIMATION_DURATION);
 
@@ -27,20 +31,31 @@ export default function BottomTabBar({ state , navigation }: BottomTabBarProps) 
 
   const tabNavigate = (index: number, navigate: boolean) => {
     if(!navigate) {
-      setBottomSheetVisible(!bottomSheetVisible);
+      if(bottomSheetVisible === index) {
+        setBottomSheetVisible(MainTab.None)
+        setTabPressed(MainTab.None);
+      } else {
+        setBottomSheetVisible(index);
+        setTabPressed(index);
+      }
       return;
     }
-    updateAnimationConfig(index);
-    const route = state.routes[index];
-    const event = navigation.emit({
-      type: "tabPress",
-      target: route.key,
-      canPreventDefault: true
-    });
+    setBottomSheetVisible(MainTab.None);
+    setTabPressed(MainTab.None);
+    
     const isFocused = state.index === index;
-    if (!isFocused && !event.defaultPrevented) {
-      navigation.navigate(route.name as never);
-    } 
+    if(!isFocused) {
+      updateAnimationConfig(index);
+      const route = state.routes[index];
+      const event = navigation.emit({
+        type: "tabPress",
+        target: route.key,
+        canPreventDefault: true
+      });
+      if (!event.defaultPrevented) {
+        navigation.navigate(route.name as never);
+      } 
+    }
   };
 
   return (
@@ -50,6 +65,7 @@ export default function BottomTabBar({ state , navigation }: BottomTabBarProps) 
           <TabItem
             key={route.key}
             state={state}
+            isPressed={tabPressed === index}
             index={index}
             tabNavigate={tabNavigate}
             duration={duration}
@@ -58,15 +74,17 @@ export default function BottomTabBar({ state , navigation }: BottomTabBarProps) 
         ))}
       </View>
       <BottomSheet
-        visible={bottomSheetVisible}
-        setVisible={setBottomSheetVisible}
+        visible={bottomSheetVisible !== MainTab.None && bottomSheetVisible !== MainTab.Home}
+        setVisible={() => setBottomSheetVisible(MainTab.None)}
         builder={(
-          <FinanceAccordionView
-            onSelect={() => {
-              setBottomSheetVisible(false);
-              tabNavigate(1, true);
-            }}
-          />
+          <>
+            <View style={{width: '100%', height: bottomSheetVisible !== MainTab.None? 10*bottomSheetVisible : 0}}/>
+            <FinanceAccordionView
+              onSelect={() => {
+                tabNavigate(1, true);
+              }}
+              />
+          </>
         )}
       />
     </>
@@ -108,14 +126,14 @@ const styles = StyleSheet.create({
 
 type TabProps = {
   state: TabNavigationState<ParamListBase>;
+  isPressed: boolean;
   index: number;
   tabNavigate: (index: number, navigate: boolean) => void;
   translateX: number;
   duration: number;
 };
 
-const TabItem = ({ state, index, tabNavigate, translateX, duration }: TabProps) => {
-  const [tabPressed, setTabPressed] = useState(false);
+const TabItem = ({ state, isPressed, index, tabNavigate, translateX, duration }: TabProps) => {
   const isFocused = state.index === index;
 
   const CustomSlideIn = () => {
@@ -133,13 +151,9 @@ const TabItem = ({ state, index, tabNavigate, translateX, duration }: TabProps) 
 
   const tabAction = (index: number) => {
     if(index === 0) {
-      if(isFocused) {
-        return;
-      }
       tabNavigate(0, true);
     } else {
       tabNavigate(index, false);
-      setTabPressed(!tabPressed);
     }
   }
 
@@ -164,7 +178,7 @@ const TabItem = ({ state, index, tabNavigate, translateX, duration }: TabProps) 
         <Icon
           name={MAIN_TABS[index].icon.name}
           width={22}
-          color={tabPressed ? THEME.secondary : THEME.foreground}
+          color={isPressed ? THEME.secondary : THEME.foreground}
         />
       </Pressable>
     </Animated.View>
