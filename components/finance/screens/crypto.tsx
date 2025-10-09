@@ -1,11 +1,13 @@
 import CryptoCard from '@/components/finance/CryptoCard';
 import TransactionFilter from '@/components/finance/TransactionFilter';
 import MainAppHeader from '@/components/ui/MainAppHeader';
+import { useFinanceStore } from '@/lib/stores/financeStore';
 import React from 'react';
 import { ScrollView } from 'react-native';
 
 export default function CryptoScreen() {
 
+  const { type } = useFinanceStore();
   
   return (
     <>

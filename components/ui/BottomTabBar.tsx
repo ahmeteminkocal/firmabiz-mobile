@@ -10,7 +10,8 @@ import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import Animated, { FadeIn, LinearTransition, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BottomSheet from '../atoms/bottomsheet';
-import { FinanceAccordionView } from './FinanceAccordionView';
+import { FinanceList } from './FinanceList';
+import FinanceManagementList from './FinanceManagementList';
 
 export default function BottomTabBar({ state , navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
@@ -42,7 +43,7 @@ export default function BottomTabBar({ state , navigation }: BottomTabBarProps) 
     }
     setBottomSheetVisible(MainTab.None);
     setTabPressed(MainTab.None);
-    
+
     const isFocused = state.index === index;
     if(!isFocused) {
       updateAnimationConfig(index);
@@ -58,6 +59,15 @@ export default function BottomTabBar({ state , navigation }: BottomTabBarProps) 
     }
   };
 
+  function bottomSheetBuilder() {
+    if(bottomSheetVisible === 1) {
+      return (<FinanceList onSelect={() => {tabNavigate(1, true)}}/>)
+    }
+    else if(bottomSheetVisible === 2) {
+      return (<FinanceManagementList  onSelect={() => {tabNavigate(2, true)}}/>)
+    }
+    return (<></>);
+  }
   return (
     <>
       <View style={[styles.tabBar, { paddingBottom: insets.bottom }]}>
@@ -75,17 +85,11 @@ export default function BottomTabBar({ state , navigation }: BottomTabBarProps) 
       </View>
       <BottomSheet
         visible={bottomSheetVisible !== MainTab.None && bottomSheetVisible !== MainTab.Home}
-        setVisible={() => setBottomSheetVisible(MainTab.None)}
-        builder={(
-          <>
-            <View style={{width: '100%', height: bottomSheetVisible !== MainTab.None? 10*bottomSheetVisible : 0}}/>
-            <FinanceAccordionView
-              onSelect={() => {
-                tabNavigate(1, true);
-              }}
-              />
-          </>
-        )}
+        setVisible={() => {
+          setBottomSheetVisible(MainTab.None);
+          setTabPressed(MainTab.None);
+        }}
+        builder={bottomSheetBuilder()}
       />
     </>
   );

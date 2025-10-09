@@ -37,3 +37,14 @@ export type IconButtonProps = {
   size?: number,
   color?: string,
 }
+
+export enum FinanceManagement {
+    WireTransferSettings = 'Wire Transfer Settings',
+    OtherMethodSettings = 'Other Method Settings',
+    WithdrawWhitelist = 'Withdraw Whitelist',
+    DepositBlacklist = 'Deposit Blacklist',
+    AccountBalances = 'Account Balances',
+    InvestmentWithdrawalOutput = 'Investment Withdrawal Output',
+    CryptoBalanceLimit = 'Crypto Balance Limit',
+    CryptoNetworks = 'Crypto Networks',
+}

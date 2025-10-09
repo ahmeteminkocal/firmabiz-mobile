@@ -2,11 +2,14 @@ import TransactionFilter from '@/components/finance/TransactionFilter';
 import { WiredAccordionView } from '@/components/finance/WiredAccordionView';
 import WiredCard from '@/components/finance/WiredCard';
 import MainAppHeader from '@/components/ui/MainAppHeader';
+import { useFinanceStore } from '@/lib/stores/financeStore';
 import React from 'react';
 import { ScrollView } from 'react-native';
 
 export default function WiredScreen() {
 
+  const { type } = useFinanceStore();
+  
   return (
     <>
       <MainAppHeader title={'Wired Transaction'}/>

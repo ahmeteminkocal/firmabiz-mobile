@@ -5,7 +5,7 @@ import { useFinanceStore } from "@/lib/stores/financeStore";
 
 export default function FinanceScreen() {
 
-    const { section , type } = useFinanceStore();
+    const { section } = useFinanceStore();
 
     return (
         section === 'crypto'? <CryptoScreen/> 

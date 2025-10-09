@@ -121,11 +121,11 @@ function RenderContent({section, isActive, onSelect} : ItemProps) {
   };
 
 
-export function FinanceAccordionView({onSelect} : {onSelect: () => void}) {  
+export function FinanceList({onSelect} : {onSelect: () => void}) {  
   
   const [ activeSections, setActiveSections] = useState<number[]>([])  
   return (
-    <View className='flex bg-background rounded-t-[8px] p-2'>
+    <View className='flex bg-background rounded-t-[8px] p-2 border-b border-border'>
       <Accordion
         sections={SECTIONS}
         activeSections={activeSections}
