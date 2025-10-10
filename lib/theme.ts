@@ -11,10 +11,13 @@ export const THEME = {
   tertiary: '#7367F0',
   tertiaryBackground: '#F3F2FE',
   
+  active: '#34C759',
+  activeBackground: '#EEF9F1',
+  
   border: '#EEEEEE',
   stroke: '#B7CBDB',
   input: '#DBDADE',
   muted: '#B7CBDB',
   destructive: '#EA5455',
-  splash: '#F7F7F7'
+  splash: '#F7F7F7',
 };

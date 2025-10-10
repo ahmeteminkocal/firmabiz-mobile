@@ -44,6 +44,11 @@ module.exports = {
           DEFAULT: 'var(--tertiary)',
           background: 'var(--tertiary-background)'
         },
+        active: {
+          DEFAULT: 'var(--active)',
+          background: 'var(--active-background)'
+        },
+
         stroke: 'var(--stroke)',
         label: 'var(--label)',
         splash: 'var(--splash)',

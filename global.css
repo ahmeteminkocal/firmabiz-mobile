@@ -39,7 +39,10 @@
 
     --tertiary: #7367F0;
     --tertiary-background: #F3F2FE;
-
+    
+    --active: #34C759;
+    --active-background: #EEF9F1
+    
     --radius: 0.3125rem;
 
     /* --chart-1: 12 76% 61%;
