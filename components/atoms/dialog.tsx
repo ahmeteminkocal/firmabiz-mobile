@@ -1,7 +1,7 @@
 import {
-  StyleSheet,
   Modal,
   Pressable,
+  StyleSheet,
 } from 'react-native';
 
 interface DialogParams {
@@ -14,7 +14,7 @@ const Dialog = ({builder, visible, setVisible}: DialogParams) => {
 
   return (
     <Modal
-      animationType="fade"
+      animationType="none"    
       transparent={true}
       visible={visible}
       onRequestClose={() => setVisible(false)}

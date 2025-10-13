@@ -21,6 +21,7 @@ function Input({
       )}>
         {leading && leading}
         <TextInput
+          onPress={props.onPress}
           selectionColor={THEME.label}
           className={cn(
             'flex-1 text-foreground h-9 text-base leading-5 p-0',

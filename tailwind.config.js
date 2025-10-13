@@ -60,7 +60,8 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
-        custom: '0px -3px 12px 0px #23004C0D'
+        custom: '0px -3px 12px 0px #23004C0D',
+        drop: '0px 5px 5px 0px #C6C6C6'
       },
       borderWidth: {
         hairline: hairlineWidth(),

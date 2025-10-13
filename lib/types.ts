@@ -1,5 +1,6 @@
 import { IconProps } from "@/components/atoms/icon";
 import { UniconName } from "@/components/unicons";
+import { Key } from "react";
 
 export enum MainTab  {
   Home = 0, 
@@ -47,4 +48,13 @@ export enum FinanceManagement {
     InvestmentWithdrawalOutput = 'Investment Withdrawal Output',
     CryptoBalanceLimit = 'Crypto Balance Limit',
     CryptoNetworks = 'Crypto Networks',
+}
+
+export type SelectorProps<T> = {
+  label: string,
+  selectedItem?: T,
+  onChange: (item: T) => void,
+  items: T[],
+  keyExtractor: (item: T) => Key,
+  valueExtractor: (item: T) => string
 }

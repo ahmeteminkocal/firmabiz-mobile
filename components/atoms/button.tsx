@@ -5,7 +5,7 @@ import { Pressable } from 'react-native';
 
 const buttonVariants = cva(
   cn(
-    'group flex justify-center items-center rounded-[5px] px-4 py-2',
+    'group flex justify-center items-center rounded-[4px] px-4 py-2',
   ),
   {
     variants: {
