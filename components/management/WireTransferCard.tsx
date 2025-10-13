@@ -1,6 +1,7 @@
 import { Text } from '@/components/atoms/text';
 import { THEME } from '@/lib/theme';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -15,6 +16,8 @@ const ANIMATION_DURATION = 300;
 type ItemProps = {section: string, index: number, isActive: boolean};
 
 function RenderHeader({isActive} : ItemProps) {
+
+  const router = useRouter();
 
   const [deposit, setDeposit] = useState<boolean>(false);
   const [withdraw, setWithdraw] = useState<boolean>(false);
@@ -41,11 +44,11 @@ function RenderHeader({isActive} : ItemProps) {
         <View className='flex-row gap-2 justify-between items-center'>
             <View className='flex-row gap-2 items-center'>
                 <SvgIcon name='pin' size={18}/>
-                <Text className='text-base text-foreground font-semibold'>TRANSFER/EFT</Text>
+                <Text className='text-base text-foreground font-semibold'>Transfer/eft</Text>
             </View>
             <View className='flex-row gap-2 items-center'>
                 <SvgIcon size={16} name='wired'/>
-                <SvgIcon size={16} name='building'/>
+                <SvgIcon size={16} name='building' onPress={() => router.push('/(protected)/(tabs)/management/bank-limits')}/>
                 <SvgIcon size={16} name='layers'/>
             </View>
         </View>

@@ -13,6 +13,7 @@ export default function TabsLayout() {
           }        
           screenOptions={{
             headerShown: false, 
+            popToTopOnBlur: true,
           }}>
           <Tabs.Screen name="home"/>
           <Tabs.Screen name="finance"/>

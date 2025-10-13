@@ -5,6 +5,7 @@ import { Icon } from "../atoms/icon";
 
 type AppHeaderProps = {
   title: string;
+  subtitle?: string;
   canGoBack?: boolean;
   withAvatar?: boolean;
   separated?: boolean;
@@ -13,6 +14,7 @@ type AppHeaderProps = {
 
 export default function MainAppHeader( {
   title,
+  subtitle,
   canGoBack = false,
   withAvatar = true,
   separated = true,
@@ -35,7 +37,10 @@ export default function MainAppHeader( {
 
             <View className="flex-row items-center gap-2">
               {showBackButton && <Icon name="arrowLeft" color={'black'} width={28} height={28} onPress={() => router.back()}/>}
-              <Text style={styles.appBarTitle}>{title}</Text>
+              <View className="flex-row items-end gap-1">
+                <Text style={styles.appBarTitle}>{title}</Text>
+                {subtitle && <Text style={styles.appBarSubtitle}>{subtitle}</Text>}
+              </View>
             </View>
 
             {withAvatar? 
@@ -65,6 +70,11 @@ appBarTitle: {
     fontSize: 18,
     fontWeight: "600",
     color: "#000",
+  },
+appBarSubtitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: THEME.subtitle,
   },
 avatar: {
     width: 32,
