@@ -1,13 +1,13 @@
 import { Pressable } from 'react-native';
-import Building from '../../assets/images/building.svg';
-import Crypto from '../../assets/images/crypto.svg';
-import Delete from '../../assets/images/delete.svg';
-import Failure from '../../assets/images/failure.svg';
-import Layers from '../../assets/images/layers.svg';
-import Pending from '../../assets/images/pending.svg';
-import Pin from '../../assets/images/pin.svg';
-import Success from '../../assets/images/success.svg';
-import Wired from '../../assets/images/wired.svg';
+import Delete from '../../assets/images/icons/actions/delete.svg';
+import Crypto from '../../assets/images/icons/crypto/crypto.svg';
+import Building from '../../assets/images/icons/navigation/building.svg';
+import Layers from '../../assets/images/icons/navigation/layers.svg';
+import Wired from '../../assets/images/icons/navigation/wired.svg';
+import Failure from '../../assets/images/icons/status/failure.svg';
+import Pending from '../../assets/images/icons/status/pending.svg';
+import Success from '../../assets/images/icons/status/success.svg';
+import Pin from '../../assets/images/icons/ui/pin.svg';
 
 const svgs = {
     'success': Success,
