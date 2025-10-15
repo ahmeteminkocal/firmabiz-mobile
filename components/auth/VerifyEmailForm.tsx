@@ -1,6 +1,7 @@
 import { Button } from '@/components/atoms/button';
 import { Text } from '@/components/atoms/text';
 import { verifySchema } from '@/lib/services/validation';
+import { useAuthStore } from '@/lib/stores/authStore';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
 import * as React from 'react';
@@ -9,7 +10,6 @@ import { type TextStyle, View } from 'react-native';
 import OtpField from './OtpField';
 
 const RESEND_CODE_INTERVAL_SECONDS = 30;
-
 const TABULAR_NUMBERS_STYLE: TextStyle = { fontVariant: ['tabular-nums'] };
 
 export function VerifyEmailForm() {
@@ -18,9 +18,11 @@ export function VerifyEmailForm() {
 
   const { countdown, restartCountdown } = useCountdown(RESEND_CODE_INTERVAL_SECONDS);
 
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+  const { control, handleSubmit, formState: { errors } } = useForm({
       resolver: yupResolver(verifySchema)
   });
+
+  const auth = useAuthStore();
 
 
   return (
@@ -45,9 +47,11 @@ export function VerifyEmailForm() {
           <Button
             variant="link"
             disabled={countdown > 0}
-            onPress={() => {
-              // TODO: Resend code
-              restartCountdown();
+            onPress={async () => {
+              if(auth.loginPayload) {
+                await auth.login(auth.loginPayload);
+                restartCountdown();
+              }
             }}>
             <Text className="text-center text-xs">
               Didn&apos;t receive the code? Resend{' '}
@@ -61,11 +65,20 @@ export function VerifyEmailForm() {
         </View>
         <View className="gap-3">
           <Button className="w-full" onPress={
-            handleSubmit(data => {
-              router.dismissAll()
-              router.push('/(protected)/(tabs)/home')
+            handleSubmit(async data => {
+              if(auth.loginPayload) {
+                await auth.verify(
+                  {tfa: data.code, ...auth.loginPayload}, 
+                  () => {
+                    router.dismissAll();
+                    router.push('/(protected)/(tabs)/home');
+                  }
+                );
+              } else {
+                console.warn('No Login Data');
+              }
             })}>
-            <Text>Continue</Text>
+            <Text>{auth.loading? 'Loading...' : 'Continue'}</Text>
           </Button>
           <Button
             variant="link"

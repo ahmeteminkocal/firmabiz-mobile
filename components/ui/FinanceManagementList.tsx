@@ -1,5 +1,5 @@
 import { Text } from '@/components/atoms/text';
-import { useManagementStore } from '@/lib/stores/managementStore';
+import { useManagementStore } from '@/lib/stores/navigation/managementStore';
 import { FinanceManagement } from '@/lib/types';
 import { Pressable, View } from 'react-native';
 

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { FinanceManagement } from '../types';
+import { FinanceManagement } from '../../types';
 
 interface FinanceManagementState {
     section: FinanceManagement,

@@ -3,25 +3,26 @@ import { Input } from '@/components/atoms/input';
 import { Text } from '@/components/atoms/text';
 import { useRouter } from 'expo-router';
 import * as React from 'react';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 import { loginSchema } from '@/lib/services/validation';
 import { useAuthStore } from '@/lib/stores/authStore';
+import { THEME } from '@/lib/theme';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
-import { Checkbox } from '../atoms/checkbox';
+import SvgIcon from '../ui/SvgIcon';
 
 export function SignInForm() {
 
   const router = useRouter();
 
-  const { loading, error, login } = useAuthStore();
+  const { loading, login } = useAuthStore();
   
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+  const { control, handleSubmit, formState: { errors } } = useForm({
       resolver: yupResolver(loginSchema)
   });
 
-  const [rememberMe, setRememberMe] = React.useState<boolean>(false);
+  const [passwordShown, setPasswordShown] = React.useState<boolean>(false);
 
   return (
     <View className="flex-1 rounded-t-[35px] bg-background w-full self-stretch gap-6 p-8 shadow-custom">
@@ -50,16 +51,7 @@ export function SignInForm() {
         />
         </View>
         <View className="gap-1.5">
-          <View className="flex-row justify-between items-center">
-            <Text className='text-xs text-label'>Password</Text>
-            <Pressable
-              onPress={() => {
-                router.push('/(auth)/reset-password');
-              }}>
-              <Text className='text-xs text-primary'>Forgot your password?</Text>
-            </Pressable>
-          </View>
-
+          <Text className='text-xs text-label'>Password</Text>
           <Controller
             control={control}
               name="password"
@@ -70,7 +62,13 @@ export function SignInForm() {
                   value={value}
                   onChangeText={onChange}
                   error={errors.password?.message}
-                  secureTextEntry
+                  trailing={(<SvgIcon 
+                    name= {passwordShown? 'passwordHide': 'passwordShow'} 
+                    size={18} 
+                    color={THEME.input}
+                    onPress={() => setPasswordShown(!passwordShown)}
+                  />)}
+                  secureTextEntry={!passwordShown}
                   returnKeyType="send"
                 />
               </>
@@ -78,29 +76,13 @@ export function SignInForm() {
           />
 
         </View>
-        <Checkbox
-          title={'Remember Me'}
-          checked={rememberMe}
-          onCheckedChange={setRememberMe}
-        />
         <Button className="w-full" onPress={handleSubmit(async data => {
-          await login(data);
-          router.push('/(auth)/verify')
+          await login(
+            data, 
+            () => {router.push('/(auth)/verify')}
+          );
         })}>
-          <Text>{loading? 'Loading' : 'Continue'}</Text>
-        </Button>
-      </View>
-      <View className='flex flex-row justify-center items-center gap-0'>
-        <Text className="text-center text-xs">
-          Are you new to the platform?{'  '}
-        </Text>
-        <Button
-          variant={'link'}
-          className='p-0'
-          onPress={() => {
-            // TODO: Navigate to sign up screen
-          }}>
-            <Text className='text-xs'>Create an account</Text>
+          <Text>{loading? 'Loading..' : 'Continue'}</Text>
         </Button>
       </View>
     </View>

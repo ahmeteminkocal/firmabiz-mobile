@@ -2,18 +2,18 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { getAuthToken } from "./storageClient";
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: "https://google.com", // TODO: Replace with our API
+  baseURL: "https://355c3c5d-54fe-463f-a2c2-eb592efc1f1b.firmabiz.com/api", // TODO: Replace with our API
   timeout: 10000, // TODO: Confirm with backend
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Request interceptor: add auth token if exists
+// Request Interceptor
 apiClient.interceptors.request.use(
   async (config) => {
     const token = await getAuthToken();
-    if (token && config.headers) {
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -21,8 +21,16 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Response Interceptor
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    logger(response);
+    if(!response.data.success) {
+      console.warn(response.data.message);
+      return Promise.reject(response.data.message);
+    }
+    return response;
+  },
   (error) => {
     if (error.response) {
       console.warn("API Error:", error.response.status, error.response.data);
@@ -60,3 +68,15 @@ export const del = async <T>(url: string, config?: AxiosRequestConfig): Promise<
 };
 
 export default apiClient;
+
+
+function logger(response: AxiosResponse) {
+  console.log('=====================================================================================');
+  console.log("Request:", response.config.url);
+  if(response.config.params)
+    console.log("Params:", response.config.params, '\n\n');
+  if(response.config.data)
+    console.log("Payload", response.config.data, '\n\n');
+  // console.log("Response", response.status + ":", JSON.stringify(response.data.data, null, 8),
+  //             '=========================================================================================');
+}

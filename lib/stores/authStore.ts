@@ -1,34 +1,53 @@
-import { put } from '@/lib/services/apiClient';
-import { setAuthToken } from '@/lib/services/storageClient';
+import { failure, success } from '@/components/atoms/toast';
+import { AxiosResponse } from 'axios';
 import { create } from 'zustand';
+import { post } from '../services/apiClient';
+import { setAuthToken } from '../services/storageClient';
 
 interface AuthState {
     loading: boolean;
     error: boolean;
     data?: User;
-    login: (payload: LoginPayload) => Promise<void | undefined>;
+    loginPayload?: LoginPayload;
+    login: (payload: LoginPayload, onSuccess?: () => void, onFailure?: () => void) => Promise<void | undefined>;
+    verify: (payload: VerifyPayload, onSuccess?: () => void, onFailure?: () => void) => Promise<void | undefined>;
 }
 
 export const useAuthStore = create<AuthState>()((set) => ({
     loading: false,
     error: false,
 
-    login: async (payload: LoginPayload): Promise<void | undefined> => {
+    login: async (payload: LoginPayload, onSuccess?: () => void, onFailure?: () => void): Promise<void | undefined> => {
+        try {
+            set({loading: true, error: false, loginPayload: undefined});
+            const response: AxiosResponse = await post('/user/login', payload);
+            set({loading: false, loginPayload: payload});
+            success(response.data?.message, false);
+            onSuccess?.()
+        } catch (error) {
+            set({loading: false, error: true});
+            failure(`${error}`, false);
+            onFailure?.();
+        }
+    },
+
+    verify: async (payload: VerifyPayload, onSuccess?: () => void, onFailure?: () => void): Promise<void | undefined> => {
         try {
             set({loading: true, error: false});
-            let response: LoginResponse = await put<LoginResponse>('/login', payload);
-            set({loading: false, data: response.user});
-            setAuthToken(response.token);
-            
+            let response: any = await post('/user/login', payload);
+            set({loading: false, data: {name: response.data.user.name, email: response.data.user.email}, loginPayload: undefined});
+            setAuthToken(response.data?.token?.plainTextToken);
+            onSuccess?.();
         } catch (error) {
-            set({loading: false, error: true, data: undefined});
+            set({loading: false, error: true});
+            failure(`${error}`, false);
+            onFailure?.();
         }
     }
 }))
 
 
 interface User {
-    id: string;
     name: string;
     email: string;
 }
@@ -39,9 +58,8 @@ interface LoginPayload {
     password: string;
 }
 
-interface LoginResponse {
-    user: User;
-    token: string;
+interface VerifyPayload {
+    email: string;
+    password: string;
+    tfa: string
 }
-
-export { LoginPayload, LoginResponse, User };

@@ -6,7 +6,7 @@ import InvestmentWithdrawalOutput from '@/components/management/screens/investme
 import OtherMethodSettings from '@/components/management/screens/other-method-settings';
 import WireTransferSettings from '@/components/management/screens/wire-transfer-settings';
 import WithdrawWhitelist from '@/components/management/screens/withdraw-whitelist';
-import { useManagementStore } from '@/lib/stores/managementStore';
+import { useManagementStore } from '@/lib/stores/navigation/managementStore';
 import { FinanceManagement } from '@/lib/types';
 
 export default function ManagementScreen() {

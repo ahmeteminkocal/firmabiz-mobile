@@ -1,5 +1,5 @@
 import { Text } from '@/components/atoms/text';
-import { Section, useFinanceStore } from '@/lib/stores/financeStore';
+import { Section, useFinanceStore } from '@/lib/stores/navigation/financeStore';
 import { cn, pascal } from '@/lib/utils';
 import React, { useState } from 'react';
 import { View } from 'react-native';
