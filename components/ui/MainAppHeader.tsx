@@ -1,6 +1,6 @@
 import { THEME } from "@/lib/theme";
 import { Stack, useRouter } from "expo-router";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Icon } from "../atoms/icon";
 
 type AppHeaderProps = {
@@ -44,9 +44,9 @@ export default function MainAppHeader( {
             </View>
 
             {withAvatar? 
-              <Image
-                source={{ uri: "https://i.pravatar.cc/100" }}
-                style={styles.avatar}
+              <Icon
+                onPress={() => router.push('/(protected)/profile')}
+                name={'menu'}
               /> 
               : <></>}
           </View>

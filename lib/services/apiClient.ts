@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { getAuthToken } from "./storageClient";
+import { getUser } from "./storageClient";
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: "https://355c3c5d-54fe-463f-a2c2-eb592efc1f1b.firmabiz.com/api", // TODO: Replace with our API
@@ -12,9 +12,9 @@ const apiClient: AxiosInstance = axios.create({
 // Request Interceptor
 apiClient.interceptors.request.use(
   async (config) => {
-    const token = await getAuthToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const user = await getUser();
+    if (user?.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
     }
     return config;
   },

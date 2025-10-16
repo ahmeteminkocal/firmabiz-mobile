@@ -1,82 +1,26 @@
-import { Button } from '@/components/atoms/button'
-import Dialog from '@/components/atoms/dialog'
-import { Text } from '@/components/atoms/text'
-import ReusableDialog from '@/components/ui/ReusableDialog'
-import { useRouter } from 'expo-router'
-import React, { useState } from 'react'
-import { View } from 'react-native'
+import { Text } from '@/components/atoms/text';
+import { useAuthStore } from '@/lib/stores/authStore';
+import { useRouter } from 'expo-router';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
 
 export default function SplashScreen() {
 
     const router = useRouter();
+    const { isAuthenticated, loading } = useAuthStore();
 
-    const [ dialogVisible , setDialogVisible] = useState(false);
-
+    useEffect(() => {
+      isAuthenticated(
+        () => setTimeout(() => router.push('/(protected)/(tabs)/home'), 2000),
+        () => setTimeout(() => router.push('/(auth)/signin'), 2000)
+      );
+    }, []);
 
     return (
-      <View className='flex-1 justify-center items-center'>
-        {/* --------------- Dialog Test ---------------  */}
-        <Button
-          variant={'link'}
-          onPress={() => {
-            setDialogVisible(true);
-          }}
-          > 
-          <Text className='text-foreground'>
-            Dialog Test
+      <View className="flex-1 w-full justify-center items-center gap-8 pt-16">
+          <Text className='text-xl font-bold text-foreground'>
+            Splash Screen
           </Text>
-        </Button>
-        <Button
-          variant={'link'}
-          onPress={() => {
-            router.replace('/(protected)/(tabs)/home')
-          }}
-          > 
-          <Text className='text-foreground'>
-            Home
-          </Text>
-        </Button>
-
-        <Dialog 
-          visible={dialogVisible} 
-          setVisible={setDialogVisible}        
-          builder={(
-            <ReusableDialog
-              visible={dialogVisible} 
-              setVisible={setDialogVisible}
-              title='Add Note'
-              content={(<Text>Dialog Content</Text>)}
-              actions={[
-                { title: 'Cancel', action: () => {}, variant: 'outline' },
-                { title: 'Update', action: () => {}, variant: 'default' }
-              ]}
-            />
-          )} 
-        />
-        {/* --------------- Home ---------------  */}
-        <Button
-          variant={'link'}
-          onPress={() => {
-            router.replace('/(protected)/(tabs)/home')
-          }}
-          > 
-          <Text className='text-foreground'>
-            Home
-          </Text>
-        </Button>
-        {/* --------------- Auth ---------------  */}
-        <Button
-          variant={'link'}
-          onPress={() => {
-            router.replace('/(auth)/signin')
-          }}
-          > 
-          <Text className='text-foreground'>
-            Auth
-          </Text>
-        </Button>
-
-        
       </View>
     )
 }
